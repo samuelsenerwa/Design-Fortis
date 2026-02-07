@@ -1,0 +1,35 @@
+name: "Setup Node & Dependencies"
+description: "Reusable composite action to setup Node.js, Yarn, and install cached dependencies"
+
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "20"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Get Yarn cache directory
+      id: yarn-cache-dir
+      shell: bash
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache Yarn dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ steps.yarn-cache-dir.outputs.dir }}
+          node_modules
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install --frozen-lockfile
