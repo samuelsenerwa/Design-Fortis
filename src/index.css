@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* ── Dark mode via class strategy ── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Theme tokens ── */
+@theme {
+  --color-primary: #000000;
+  --color-primary-foreground: #ffffff;
+
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+
+  --color-border: #e5e5e5;
+  --color-ring: #000000;
+
+  --color-accent: #f5f5f5;
+  --color-accent-foreground: #000000;
+}
+
+/* ── Dark overrides ── */
+.dark {
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+
+  --color-muted: #171717;
+  --color-muted-foreground: #a3a3a3;
+
+  --color-border: #262626;
+  --color-ring: #ffffff;
+
+  --color-accent: #171717;
+  --color-accent-foreground: #ffffff;
+}
+
+/* ── Base styles ── */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+  transition: color 0.3s, background-color 0.3s;
+}
