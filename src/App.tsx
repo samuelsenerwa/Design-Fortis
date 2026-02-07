@@ -1,20 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useTheme } from './hooks/useTheme'
+import Navbar from './components/layout/Navbar'
 
 function App() {
-  const [dark, setDark] = useState(() => {
-    const stored = localStorage.getItem('theme')
-    if (stored) return stored === 'dark'
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-  })
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark)
-    localStorage.setItem('theme', dark ? 'dark' : 'light')
-  }, [dark])
+  const { dark, toggle } = useTheme()
 
   return (
     <>
-      <h1>Design Fortis</h1>
+      <Navbar dark={dark} toggleTheme={toggle} />
+      <main className="pt-16">
+        <h1 className="text-3xl font-bold text-foreground text-center mt-20">
+          Design Fortis
+        </h1>
+      </main>
     </>
   )
 }
