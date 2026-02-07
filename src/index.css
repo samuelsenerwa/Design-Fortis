@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 
 /* ── Dark mode via class strategy ── */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -19,6 +21,8 @@
 
   --color-accent: #f5f5f5;
   --color-accent-foreground: #000000;
+
+  --font-outfit: "Outfit", sans-serif;
 }
 
 /* ── Dark overrides ── */
@@ -41,7 +45,7 @@
 
 /* ── Base styles ── */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-outfit);
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
