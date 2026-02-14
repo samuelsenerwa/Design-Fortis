@@ -14,7 +14,7 @@ export default function Hero({ dark }: HeroProps) {
         style={{
           background: dark
             ? "radial-gradient(ellipse at 50% 40%, #1c1c1e 0%, #0e0e10 50%, #050506 100%)"
-            : "radial-gradient(ellipse at 50% 40%, #fafaf9 0%, #f0efed 50%, #e6e5e3 100%)",
+            : "#ffffff",
         }}
       />
 
@@ -27,7 +27,7 @@ export default function Hero({ dark }: HeroProps) {
         style={{
           background: dark
             ? "radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,0.5) 100%)"
-            : "radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.08) 100%)",
+            : "#fffff",
           zIndex: 1,
         }}
       />
