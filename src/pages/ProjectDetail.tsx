@@ -1,6 +1,7 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getProjectBySlug } from "../data/projects";
+import Button from "../components/ui/Button";
 
 interface ProjectDetailProps {
   dark: boolean;
@@ -8,6 +9,7 @@ interface ProjectDetailProps {
 
 export default function ProjectDetail({ dark }: ProjectDetailProps) {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const project = slug ? getProjectBySlug(slug) : undefined;
 
   // Scroll to top on mount
@@ -175,16 +177,22 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       </div>
 
       {/* Back link */}
-      <div className="max-w-5xl mx-auto px-6 md:px-10 mt-20">
-        <Link
-          to="/"
-          className={`inline-flex items-center gap-2 text-xs font-light tracking-[0.2em] uppercase transition-opacity hover:opacity-60 ${
-            dark ? "text-white/50" : "text-black/50"
+      <div className="max-w-5xl mx-auto px-6 md:px-10 mt-20 border-t border-gray-200 pt-6">
+        <div className="flex flex-col justify-center items-center gap-4 mt-6">
+          <p className="uppercase text-xs font-light tracking-[0.2em] text-gray-400">End of Record</p>
+        <Button
+          variant="outline"
+          onClick={() => navigate("/")}
+          className={`gap-2 px-8 py-3 text-xs font-light tracking-[0.2em] transition-all items-center ${
+            dark 
+              ? "text-white border-white/20 hover:border-white hover:bg-transparent hover:text-white" 
+              : "text-black border-black/20 hover:border-black hover:bg-black hover:text-white"
           }`}
         >
-          <span className="text-base">←</span>
-          Back to Projects
-        </Link>
+          <span className="text-center">←</span>
+          Back to Work
+        </Button>
+        </div>
       </div>
     </main>
   );
