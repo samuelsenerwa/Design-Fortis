@@ -1,7 +1,17 @@
 import { useParams, Navigate, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProjectBySlug } from "../data/projects";
 import Button from "../components/ui/Button";
+import Lightbox from "yet-another-react-lightbox";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 interface ProjectDetailProps {
   dark: boolean;
@@ -11,6 +21,15 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const project = slug ? getProjectBySlug(slug) : undefined;
+
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+  
+    const openLightbox = (index: number) => {
+      setLightboxIndex(index);
+      setLightboxOpen(true);
+    };
+  
 
   // Scroll to top on mount
   useEffect(() => {
@@ -28,11 +47,14 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       }`}
     >
       {/* Hero image — full width */}
-      <div className="w-full aspect-16/7 overflow-hidden">
+      <div 
+        className="w-full aspect-16/7 overflow-hidden cursor-pointer"
+        onClick={() => openLightbox(0)}
+      >
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-1000 ease-out hover:scale-105"
         />
       </div>
 
@@ -137,15 +159,16 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
                   {/* Left image */}
                   {left && (
                     <div
-                      className={`overflow-hidden ${
+                      className={`overflow-hidden cursor-pointer ${
                         isEven ? "md:col-span-7" : "md:col-span-5 md:mt-12"
                       }`}
+                      onClick={() => openLightbox(rowIdx * 2)}
                     >
                       <img
                         src={left}
                         alt={`${project.title} — ${rowIdx * 2 + 1}`}
                         loading="lazy"
-                        className={`w-full object-cover ${
+                        className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
                           isEven ? "aspect-4/3" : "aspect-3/4"
                         }`}
                       />
@@ -155,15 +178,16 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
                   {/* Right image */}
                   {right && (
                     <div
-                      className={`overflow-hidden ${
+                      className={`overflow-hidden cursor-pointer ${
                         isEven ? "md:col-span-5 md:mt-16" : "md:col-span-7"
                       }`}
+                      onClick={() => openLightbox(rowIdx * 2 + 1)}
                     >
                       <img
                         src={right}
                         alt={`${project.title} — ${rowIdx * 2 + 2}`}
                         loading="lazy"
-                        className={`w-full object-cover ${
+                        className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
                           isEven ? "aspect-3/4" : "aspect-4/3"
                         }`}
                       />
@@ -194,6 +218,35 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         </Button>
         </div>
       </div>
+
+      {/* Lightbox with plugins */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={lightboxIndex}
+        slides={project.gallery.map((src) => ({
+          src,
+          alt: project.title,
+        }))}
+        plugins={[Counter, Fullscreen, Slideshow, Thumbnails, Zoom]}
+        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+        thumbnails={{
+          position: "bottom",
+          width: 80,
+          height: 60,
+          gap: 4,
+          borderRadius: 4,
+        }}
+        zoom={{
+          maxZoomPixelRatio: 3,
+          scrollToZoom: true,
+        }}
+        slideshow={{ delay: 3000 }}
+        styles={{
+          container: { backgroundColor: "rgba(0, 0, 0, 0.92)" },
+        }}
+        controller={{ closeOnBackdropClick: true }}
+      />
     </main>
   );
 }
