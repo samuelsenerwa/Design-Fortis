@@ -5,11 +5,13 @@ import Hero from './components/sections/Hero'
 import ProjectGrid from './components/sections/ProjectGrid'
 import ProjectDetail from './pages/ProjectDetail'
 import Archive from './pages/Archive'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 function App() {
   const { dark, toggle } = useTheme()
 
   return (
+    <>
     <BrowserRouter>
       <Navbar dark={dark} toggleTheme={toggle} />
       <Routes>
@@ -26,6 +28,8 @@ function App() {
         <Route path="/archive" element={<Archive dark={dark} />} />
       </Routes>
     </BrowserRouter>
+    <SpeedInsights />
+    </>
   )
 }
 
