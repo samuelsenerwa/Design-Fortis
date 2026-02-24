@@ -8,11 +8,11 @@ interface NavbarProps {
 }
 
 const NAV_LINKS = [
-  { label: "HOME", href: "#" },
-  { label: "WORK", href: "#work" },
-  { label: "ARCHIVE", href: "#archive" },
-  { label: "ABOUT", href: "#about" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "HOME", href: "/" },
+  { label: "WORK", href: "/work" },
+  { label: "ARCHIVE", href: "/archive" },
+  { label: "ABOUT", href: "/about" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 const DESKTOP_LINKS = NAV_LINKS.filter((l) => l.label !== "HOME" && l.label !== "WORK");
@@ -136,13 +136,17 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
     }
   }, [menuOpen]);
 
+  const isActive = (link: string) => {
+    return link === window.location.pathname;
+  };
+
   return (
     <>
       <nav ref={navRef} className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="mx-auto flex h-16 items-center justify-between px-6 lg:px-10">
           {/* Logo */}
           <a
-            href="#"
+            href="/"
             className="text-lg font-semibold tracking-[0.2em] text-foreground uppercase"
           >
             Design Fortis
@@ -154,7 +158,11 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-xs font-medium tracking-[0.2em] text-foreground/70 uppercase transition-colors duration-300 hover:text-foreground"
+                className={`text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-300 hover:text-foreground ${
+                  isActive(link.href) 
+                    ? "text-foreground border-b-2 border-foreground" 
+                    : "text-foreground/70"
+                }`}
               >
                 {link.label}
               </a>

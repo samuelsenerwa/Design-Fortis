@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import ProjectGrid from './components/sections/ProjectGrid'
 import ProjectDetail from './pages/ProjectDetail'
+import Archive from './pages/Archive'
 
 function App() {
   const { dark, toggle } = useTheme()
@@ -22,6 +23,7 @@ function App() {
           }
         />
         <Route path="/work/:slug" element={<ProjectDetail dark={dark} />} />
+        <Route path="/archive" element={<Archive dark={dark} />} />
       </Routes>
     </BrowserRouter>
   )
