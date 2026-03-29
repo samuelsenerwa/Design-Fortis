@@ -19,9 +19,9 @@ export default function ContactUs({ dark }: ContactUsProps) {
           {/* Left Column - Contact Info */}
           <div className="space-y-12">
             <h2
-              className={`text-4xl md:text-4xl font-semibold ${
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-tight leading-tight mb-8 ${
                 dark ? "text-white" : "text-black"
-              } uppercase tracking-widest`}
+              }`}
             >
               LET&apos;S TALK
             </h2>
