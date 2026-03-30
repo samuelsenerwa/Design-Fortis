@@ -6,40 +6,64 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import "yet-another-react-lightbox/styles.css";
 
 // Import all images from assets
-import img1pp from "../assets/1pp.png";
-import img2PP from "../assets/2PP.png";
-import img375 from "../assets/3.75.png";
-import img392 from "../assets/3.92.png";
-import img455 from "../assets/4.55w_Interactive LightMix.png";
-import img515 from "../assets/5.15curv.png";
-import imgEXTPAV from "../assets/EXTPAV.png";
-import imgScene10 from "../assets/Scene 10_1.png";
-import imgScene4 from "../assets/Scene 4_1.png";
-import imgScene5 from "../assets/Scene 5_1.png";
-import imgScene7 from "../assets/Scene 7_1.png";
-import imgScene8 from "../assets/Scene 8.png";
-import imgCocoon from "../assets/cocoonschema.png";
-import imgFamcc from "../assets/famcc.png";
+import alllit from "../assets/alllit.png";
+import builderComponents from "../assets/builder_components.jpg";
+import cocoonSchema from "../assets/cocoonschema.png";
+import commercialBasement from "../assets/underground_parking.png";
+import famcc from "../assets/famcc.jpg";
+import fortisEstate from "../assets/fortis_estate.jpg";
+import fortisEstateCompound from "../assets/fortis_estate_compound.jpg";
+import fortisEstateFront from "../assets/fortis_estate_front.jpg";
+import lutInteractive from "../assets/lut_Interactive LightMix.png";
+import olerianMaraCompound from "../assets/olerian_mara_cocoon_couple_cottages.jpg";
+import olerianMaraInterior from "../assets/olerian_mara_interior_view.jpg";
+import olerianMaraLounge from "../assets/olerian_mara_lounge.jpg";
+import olerianMaraMaster from "../assets/olerian_mara_ground_level_view.png";
+import olerianMaraPicnic from "../assets/olerian_mara_cottages_walkways.jpg";
+import olerianMaraPicnicArea from "../assets/olerian_mara_olosho_enkaji_cottages.jpg";
+import olerianMaraSideview from "../assets/olerian_mara_sideview.jpg";
+import overcast from "../assets/apartment_interior.png";
+import overcastLightsOn from "../assets/overcast_lights_on.png";
+import overcastNight from "../assets/overcast_night.png";
+import overcastRoom from "../assets/overcast_room.png";
+import overcastRoomLights from "../assets/overcast_room_lights.png";
+import roomInterior from "../assets/room_interior.png";
+import roomLight from "../assets/room_light.png";
+import roomNight from "../assets/room_night.png";
+import villa from "../assets/moswasco_complex.png";
+import windowView from "../assets/window_view.png";
 
 interface ArchiveProps {
   dark: boolean;
 }
 
 const ARCHIVE_IMAGES = [
-  { src: img1pp, alt: "1pp" },
-  { src: img2PP, alt: "2PP" },
-  { src: img375, alt: "3.75" },
-  { src: img392, alt: "3.92" },
-  { src: img455, alt: "4.55w Interactive LightMix" },
-  { src: img515, alt: "5.15curv" },
-  { src: imgEXTPAV, alt: "EXTPAV" },
-  { src: imgScene10, alt: "Scene 10_1" },
-  { src: imgScene4, alt: "Scene 4_1" },
-  { src: imgScene5, alt: "Scene 5_1" },
-  { src: imgScene7, alt: "Scene 7_1" },
-  { src: imgScene8, alt: "Scene 8" },
-  { src: imgCocoon, alt: "Cocoon Schema" },
-  { src: imgFamcc, alt: "Famcc" },
+  { src: alllit, alt: "All Lit" },
+  { src: builderComponents, alt: "Builder Components" },
+  { src: cocoonSchema, alt: "Cocoon Schema" },
+  { src: commercialBasement, alt: "Commercial Basement Parking Design" },
+  { src: famcc, alt: "Famcc" },
+  { src: fortisEstate, alt: "Fortis Estate" },
+  { src: fortisEstateCompound, alt: "Fortis Estate Compound" },
+  { src: fortisEstateFront, alt: "Fortis Estate Front" },
+  { src: lutInteractive, alt: "LUT Interactive LightMix" },
+  { src: olerianMaraCompound, alt: "Olerian Mara Compound" },
+  { src: olerianMaraInterior, alt: "Olerian Mara Interior View" },
+  { src: olerianMaraLounge, alt: "Olerian Mara Lounge" },
+  { src: olerianMaraMaster, alt: "Olerian Mara Master" },
+  { src: olerianMaraPicnic, alt: "Olerian Mara Picnic" },
+  { src: olerianMaraPicnicArea, alt: "Olerian Mara Picnic Area" },
+  { src: olerianMaraSideview, alt: "Olerian Mara Sideview" },
+  { src: overcast, alt: "Overcast" },
+  { src: overcastLightsOn, alt: "Overcast Lights On" },
+  { src: overcastNight, alt: "Overcast Night" },
+  { src: overcastRoom, alt: "Overcast Room" },
+  { src: overcastRoomLights, alt: "Overcast Room Lights" },
+  { src: roomInterior, alt: "Room Interior" },
+  { src: roomLight, alt: "Room Light" },
+  { src: roomNight, alt: "Room Night" },
+  { src: villa, alt: "Villa" },
+  { src: windowView, alt: "Window View" },
 ];
 
 export default function Archive({ dark }: ArchiveProps) {

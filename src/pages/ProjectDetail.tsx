@@ -34,7 +34,7 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
+  }, [slug, dark]);
 
   if (!project) {
     return <Navigate to="/" replace />;
