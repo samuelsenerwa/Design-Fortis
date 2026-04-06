@@ -89,7 +89,7 @@ export default function ContactUs({ dark }: ContactUsProps) {
 
             <div className="flex gap-6 pt-4">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/designfortisfdn?igsh=MmNuYnJqd3FlNmU="
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`text-xs uppercase tracking-widest hover:opacity-70 transition-opacity ${
@@ -109,24 +109,14 @@ export default function ContactUs({ dark }: ContactUsProps) {
                 LINKEDIN
               </a>
               <a
-                href="https://behance.net"
+                href="https://wa.me/254796136945"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`text-xs uppercase tracking-widest hover:opacity-70 transition-opacity ${
                   dark ? "text-white/70" : "text-black/70"
                 }`}
               >
-                BEHANCE
-              </a>
-              <a
-                href="https://pinterest.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`text-xs uppercase tracking-widest hover:opacity-70 transition-opacity ${
-                  dark ? "text-white/70" : "text-black/70"
-                }`}
-              >
-                PINTEREST
+                WHATSAPP
               </a>
             </div>
           </div>
