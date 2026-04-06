@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Button from "../ui/Button";
 
 interface FooterProps {
   dark: boolean;
@@ -36,19 +36,15 @@ export default function Footer({ dark }: FooterProps) {
             </h2>
           </div>
           <div>
-            <Link
-              to="/contact"
-              className={`relative inline-flex items-center justify-center px-10 py-6 md:px-14 md:py-8 border overflow-hidden group transition-colors ${
-                dark
-                  ? "border-white text-white hover:bg-white hover:text-black"
-                  : "border-black text-black hover:bg-black hover:text-white"
-              }`}
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => window.location.href = '/contact'}
+              className="px-6 py-4 md:px-10 md:py-6 lg:px-14 lg:py-8 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.25em] font-bold"
               aria-label="Start a Project"
             >
-              <span className="relative z-10 text-sm uppercase tracking-[0.25em] font-bold transition-colors duration-300">
-                Start a Project
-              </span>
-            </Link>
+              Start a Project
+            </Button>
           </div>
         </div>
       </div>
