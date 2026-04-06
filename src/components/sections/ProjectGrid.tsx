@@ -108,7 +108,7 @@ export default function ProjectGrid({ dark }: ProjectGridProps) {
 
   return (
     <section
-      className={`w-full px-6 lg:px-10 ${dark ? "bg-black" : "bg-white"} transition-colors duration-700`}
+      className={`max-w-[1920px] mx-auto px-6 lg:px-10 ${dark ? "bg-black" : "bg-white"} transition-colors duration-700`}
     >
       <div className="flex flex-col gap-1">
         {rows.map((row, rowIndex) => {

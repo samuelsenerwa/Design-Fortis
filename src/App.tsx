@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useTheme } from './hooks/useTheme'
 import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
 import ProjectGrid from './components/sections/ProjectGrid'
 import ProjectDetail from './pages/ProjectDetail'
@@ -23,6 +24,7 @@ function App() {
             <>
               <Hero dark={dark} />
               <ProjectGrid dark={dark} />
+              <Footer dark={dark} />
             </>
           }
         />
