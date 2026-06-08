@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useTheme } from './hooks/useTheme'
 import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
 import ProjectGrid from './components/sections/ProjectGrid'
 import ProjectDetail from './pages/ProjectDetail'
 import Archive from './pages/Archive'
+import About from './pages/About'
+import ContactUs from './pages/ContactUs'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 
 function App() {
@@ -21,11 +24,14 @@ function App() {
             <>
               <Hero dark={dark} />
               <ProjectGrid dark={dark} />
+              <Footer dark={dark} />
             </>
           }
         />
         <Route path="/work/:slug" element={<ProjectDetail dark={dark} />} />
         <Route path="/archive" element={<Archive dark={dark} />} />
+        <Route path="/about" element={<About dark={dark} />} />
+        <Route path="/contact" element={<ContactUs dark={dark} />} />
       </Routes>
     </BrowserRouter>
     <SpeedInsights />

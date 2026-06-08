@@ -43,7 +43,7 @@ export default function Hero({ dark }: HeroProps) {
           <span className="font-normal">Fortis</span>
         </h1>
         <p className="mt-6 max-w-md text-sm md:text-base font-light text-foreground/50 leading-relaxed">
-          Crafting digital experiences with precision, elegance, and purpose.
+          Setting the standard, one design at a time.Beyond Architecture
         </p>
         <div className="mt-10 pointer-events-auto">
           <Button variant="outline" size="lg">
