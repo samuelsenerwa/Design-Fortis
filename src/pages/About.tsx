@@ -1,3 +1,5 @@
+import Footer from "../components/layout/Footer";
+
 interface AboutProps {
   dark: boolean;
 }
@@ -5,7 +7,7 @@ interface AboutProps {
 export default function About({ dark }: AboutProps) {
   return (
     <main
-      className={`min-h-screen pt-20 pb-24 transition-colors duration-700 ${
+      className={`min-h-screen pt-20 pb-6 transition-colors duration-700 ${
         dark ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
@@ -20,8 +22,8 @@ export default function About({ dark }: AboutProps) {
               dark ? "text-white/80" : "text-black/80"
             }`}
           >
-            Design Fortis is an architectural and landscape visualization studio specializing in
-            photorealistic renders, concept visuals, and spatial storytelling for design projects.
+            Design Fortis is a full-service architectural design and build firm — delivering end-to-end
+            solutions from initial concept through to constructed reality.
           </p>
         </div>
 
@@ -42,22 +44,12 @@ export default function About({ dark }: AboutProps) {
                   dark ? "text-white/70" : "text-black/70"
                 }`}
               >
-                We believe that architecture is more than just buildings—it's about creating
-                experiences, emotions, and narratives. Our work bridges the gap between concept and
-                reality, transforming architectural visions into compelling visual stories.
-              </p>
-            </div>
-
-            <div>
-              <p
-                className={`text-base md:text-lg font-light leading-relaxed ${
-                  dark ? "text-white/70" : "text-black/70"
-                }`}
-              >
-                Every project is approached with meticulous attention to detail, combining technical
-                precision with artistic sensibility. We don't just render spaces; we craft
-                atmospheres that resonate with viewers and bring designs to life before they're
-                built.
+                We believe architecture is the art of shaping human experience. Every structure we
+                design carries a responsibility — to the people who inhabit it, the landscape it
+                occupies, and the legacy it leaves behind. Our work moves beyond drawings and
+                renders; it stands in the real world, built with precision and purpose. Every project
+                begins with listening. We immerse ourselves in your vision, your context, and your
+                ambition — then engineer a built solution that exceeds what you imagined possible.
               </p>
             </div>
           </div>
@@ -77,10 +69,9 @@ export default function About({ dark }: AboutProps) {
                   dark ? "text-white/70" : "text-black/70"
                 }`}
               >
-                We specialize in creating high-quality architectural visualizations that help
-                architects, developers, and designers communicate their vision effectively. From
-                early concept sketches to final presentation renders, we provide comprehensive
-                visualization services.
+                We are your single point of accountability from concept to completion. Our integrated
+                team of architects, designers, and builders ensures seamless delivery at every
+                stage.
               </p>
             </div>
 
@@ -91,7 +82,7 @@ export default function About({ dark }: AboutProps) {
                 }`}
               >
                 <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
-                  Architectural Visualization
+                  Architectural Design
                 </h3>
               </div>
               <div
@@ -100,7 +91,7 @@ export default function About({ dark }: AboutProps) {
                 }`}
               >
                 <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
-                  Interior Rendering
+                  Interior Design & Space Planning
                 </h3>
               </div>
               <div
@@ -109,7 +100,7 @@ export default function About({ dark }: AboutProps) {
                 }`}
               >
                 <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
-                  Landscape Design Visualization
+                  Landscape & Site Design
                 </h3>
               </div>
               <div
@@ -118,7 +109,7 @@ export default function About({ dark }: AboutProps) {
                 }`}
               >
                 <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
-                  Concept Development
+                  Construction & Project Management
                 </h3>
               </div>
               <div
@@ -127,7 +118,16 @@ export default function About({ dark }: AboutProps) {
                 }`}
               >
                 <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
-                  3D Modeling & Animation
+                  3D Visualization & Concept Development
+                </h3>
+              </div>
+              <div
+                className={`pb-3 border-b ${
+                  dark ? "border-white/10" : "border-black/10"
+                }`}
+              >
+                <h3 className={`text-sm font-normal ${dark ? "text-white" : "text-black"}`}>
+                  Design Consultation & Feasibility Studies
                 </h3>
               </div>
             </div>
@@ -149,19 +149,10 @@ export default function About({ dark }: AboutProps) {
                 dark ? "text-white/70" : "text-black/70"
               }`}
             >
-              We start by understanding your project's unique context, goals, and audience. Through
-              close collaboration, we develop a visual language that authentically represents your
-              design intent while creating emotional connections with viewers.
-            </p>
-            <p
-              className={`text-base md:text-lg font-light leading-relaxed ${
-                dark ? "text-white/70" : "text-black/70"
-              }`}
-            >
-              Our process combines cutting-edge technology with traditional artistic principles.
-              We use industry-leading software and rendering engines, but always prioritize
-              composition, lighting, and storytelling—the elements that make visualizations truly
-              compelling.
+             We start where most firms stop — at the intersection of bold design and buildable reality. Through close collaboration with our clients,
+             we develop architectural solutions that are not only visually compelling but structurally sound and practically deliverable.
+             Our process integrates design thinking with construction intelligence from day one,
+             eliminating the costly gaps that arise when design and build teams work in silos.
             </p>
           </div>
         </div>
@@ -181,8 +172,8 @@ export default function About({ dark }: AboutProps) {
                 dark ? "text-white/70" : "text-black/70"
               }`}
             >
-              Every detail matters. We ensure technical accuracy while maintaining artistic vision,
-              delivering renders that are both beautiful and architecturally sound.
+               Every detail is engineered with intent. We hold ourselves to the highest standards of technical accuracy and craftsmanship,
+               ensuring what is designed is what gets built — beautifully.
             </p>
           </div>
 
@@ -199,8 +190,7 @@ export default function About({ dark }: AboutProps) {
                 dark ? "text-white/70" : "text-black/70"
               }`}
             >
-              We work closely with our clients throughout the process, ensuring the final result
-              exceeds expectations and truly represents their vision.
+              You are part of the team. We keep you informed, involved, and in control at every milestone, from first sketch to final handover.
             </p>
           </div>
 
@@ -217,40 +207,13 @@ export default function About({ dark }: AboutProps) {
                 dark ? "text-white/70" : "text-black/70"
               }`}
             >
-              We stay at the forefront of visualization technology, constantly exploring new
-              techniques and tools to deliver cutting-edge results.
+             We bring the latest in design technology, materials, and construction methodology to every project — delivering results that are not just current, but enduring.
             </p>
           </div>
         </div>
 
         {/* Contact CTA */}
-        <div className="max-w-4xl pt-12 border-t border-white/10">
-          <h2
-            className={`text-2xl md:text-3xl font-light mb-6 ${
-              dark ? "text-white" : "text-black"
-            }`}
-          >
-            Let's work together
-          </h2>
-          <p
-            className={`text-base md:text-lg font-light leading-relaxed mb-8 ${
-              dark ? "text-white/70" : "text-black/70"
-            }`}
-          >
-            Whether you're an architect with a vision, a developer with a project, or a designer
-            seeking to bring your concepts to life, we'd love to hear from you.
-          </p>
-          <a
-            href="/contact"
-            className={`inline-block px-8 py-3 border ${
-              dark
-                ? "border-white text-white hover:bg-white hover:text-black"
-                : "border-black text-black hover:bg-black hover:text-white"
-            } transition-all duration-300 text-xs tracking-widest uppercase`}
-          >
-            GET IN TOUCH
-          </a>
-        </div>
+       <Footer dark={dark} />
       </div>
     </main>
   );
