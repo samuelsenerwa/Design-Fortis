@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Raw/oversized master image files — kept locally only, never committed.
+# Run `node scripts/optimize-images.mjs` to (re)generate src/assets/optimized from these.
+/assets-originals/

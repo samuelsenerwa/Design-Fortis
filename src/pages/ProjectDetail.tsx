@@ -2,6 +2,8 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProjectBySlug } from "../data/projects";
 import Button from "../components/ui/Button";
+import ResponsiveImage from "../components/ui/ResponsiveImage";
+import { getLargestUrl } from "../lib/imageManifest";
 import Lightbox from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
@@ -51,9 +53,11 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         className="w-full aspect-16/7 overflow-hidden cursor-pointer"
         onClick={() => openLightbox(0)}
       >
-        <img
-          src={project.image}
+        <ResponsiveImage
+          name={project.image}
           alt={project.title}
+          role="hero"
+          loading="eager"
           className="w-full h-full object-cover transition-transform duration-1000 ease-out hover:scale-105"
         />
       </div>
@@ -164,10 +168,10 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
                       }`}
                       onClick={() => openLightbox(rowIdx * 2)}
                     >
-                      <img
-                        src={left}
+                      <ResponsiveImage
+                        name={left}
                         alt={`${project.title} — ${rowIdx * 2 + 1}`}
-                        loading="lazy"
+                        role="gallery"
                         className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
                           isEven ? "aspect-4/3" : "aspect-3/4"
                         }`}
@@ -183,10 +187,10 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
                       }`}
                       onClick={() => openLightbox(rowIdx * 2 + 1)}
                     >
-                      <img
-                        src={right}
+                      <ResponsiveImage
+                        name={right}
                         alt={`${project.title} — ${rowIdx * 2 + 2}`}
-                        loading="lazy"
+                        role="gallery"
                         className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
                           isEven ? "aspect-3/4" : "aspect-4/3"
                         }`}
@@ -224,8 +228,8 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={project.gallery.map((src) => ({
-          src,
+        slides={project.gallery.map((name) => ({
+          src: getLargestUrl(name, "jpg"),
           alt: project.title,
         }))}
         plugins={[Counter, Fullscreen, Slideshow, Thumbnails, Zoom]}

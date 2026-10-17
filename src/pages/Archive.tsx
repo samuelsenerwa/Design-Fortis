@@ -5,65 +5,41 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 
 import "yet-another-react-lightbox/styles.css";
 
-// Import all images from assets
-import alllit from "../assets/alllit.png";
-import builderComponents from "../assets/builder_components.jpg";
-import cocoonSchema from "../assets/cocoonschema.png";
-import commercialBasement from "../assets/underground_parking.png";
-import famcc from "../assets/famcc.jpg";
-import fortisEstate from "../assets/fortis_estate.jpg";
-import fortisEstateCompound from "../assets/fortis_estate_compound.jpg";
-import fortisEstateFront from "../assets/fortis_estate_front.jpg";
-import lutInteractive from "../assets/lut_Interactive LightMix.png";
-import olerianMaraCompound from "../assets/olerian_mara_cocoon_couple_cottages.jpg";
-import olerianMaraInterior from "../assets/olerian_mara_interior_view.jpg";
-import olerianMaraLounge from "../assets/olerian_mara_lounge.jpg";
-import olerianMaraMaster from "../assets/olerian_mara_ground_level_view.png";
-import olerianMaraPicnic from "../assets/olerian_mara_cottages_walkways.jpg";
-import olerianMaraPicnicArea from "../assets/olerian_mara_olosho_enkaji_cottages.jpg";
-import olerianMaraSideview from "../assets/olerian_mara_sideview.jpg";
-import overcast from "../assets/apartment_interior.png";
-import overcastLightsOn from "../assets/overcast_lights_on.png";
-import overcastNight from "../assets/overcast_night.png";
-import overcastRoom from "../assets/overcast_room.png";
-import overcastRoomLights from "../assets/overcast_room_lights.png";
-import roomInterior from "../assets/room_interior.png";
-import roomLight from "../assets/room_light.png";
-import roomNight from "../assets/room_night.png";
-import villa from "../assets/moswasco_complex.png";
-import windowView from "../assets/window_view.png";
+import ResponsiveImage from "../components/ui/ResponsiveImage";
+import { getLargestUrl } from "../lib/imageManifest";
 
 interface ArchiveProps {
   dark: boolean;
 }
 
+// Basenames of the responsive image derivatives (see scripts/optimize-images.mjs).
 const ARCHIVE_IMAGES = [
-  { src: alllit, alt: "All Lit" },
-  { src: builderComponents, alt: "Builder Components" },
-  { src: cocoonSchema, alt: "Cocoon Schema" },
-  { src: commercialBasement, alt: "Commercial Basement Parking Design" },
-  { src: famcc, alt: "Famcc" },
-  { src: fortisEstate, alt: "Fortis Estate" },
-  { src: fortisEstateCompound, alt: "Fortis Estate Compound" },
-  { src: fortisEstateFront, alt: "Fortis Estate Front" },
-  { src: lutInteractive, alt: "LUT Interactive LightMix" },
-  { src: olerianMaraCompound, alt: "Olerian Mara Compound" },
-  { src: olerianMaraInterior, alt: "Olerian Mara Interior View" },
-  { src: olerianMaraLounge, alt: "Olerian Mara Lounge" },
-  { src: olerianMaraMaster, alt: "Olerian Mara Master" },
-  { src: olerianMaraPicnic, alt: "Olerian Mara Picnic" },
-  { src: olerianMaraPicnicArea, alt: "Olerian Mara Picnic Area" },
-  { src: olerianMaraSideview, alt: "Olerian Mara Sideview" },
-  { src: overcast, alt: "Overcast" },
-  { src: overcastLightsOn, alt: "Overcast Lights On" },
-  { src: overcastNight, alt: "Overcast Night" },
-  { src: overcastRoom, alt: "Overcast Room" },
-  { src: overcastRoomLights, alt: "Overcast Room Lights" },
-  { src: roomInterior, alt: "Room Interior" },
-  { src: roomLight, alt: "Room Light" },
-  { src: roomNight, alt: "Room Night" },
-  { src: villa, alt: "Villa" },
-  { src: windowView, alt: "Window View" },
+  { name: "alllit", alt: "All Lit" },
+  { name: "builder_components", alt: "Builder Components" },
+  { name: "cocoonschema", alt: "Cocoon Schema" },
+  { name: "underground_parking", alt: "Commercial Basement Parking Design" },
+  { name: "famcc", alt: "Famcc" },
+  { name: "fortis_estate", alt: "Fortis Estate" },
+  { name: "fortis_estate_compound", alt: "Fortis Estate Compound" },
+  { name: "fortis_estate_front", alt: "Fortis Estate Front" },
+  { name: "lut_interactive_lightmix", alt: "LUT Interactive LightMix" },
+  { name: "olerian_mara_cocoon_couple_cottages", alt: "Olerian Mara Compound" },
+  { name: "olerian_mara_interior_view", alt: "Olerian Mara Interior View" },
+  { name: "olerian_mara_lounge", alt: "Olerian Mara Lounge" },
+  { name: "olerian_mara_ground_level_view", alt: "Olerian Mara Master" },
+  { name: "olerian_mara_cottages_walkways", alt: "Olerian Mara Picnic" },
+  { name: "olerian_mara_olosho_enkaji_cottages", alt: "Olerian Mara Picnic Area" },
+  { name: "olerian_mara_sideview", alt: "Olerian Mara Sideview" },
+  { name: "apartment_interior", alt: "Overcast" },
+  { name: "overcast_lights_on", alt: "Overcast Lights On" },
+  { name: "overcast_night", alt: "Overcast Night" },
+  { name: "overcast_room", alt: "Overcast Room" },
+  { name: "overcast_room_lights", alt: "Overcast Room Lights" },
+  { name: "room_interior", alt: "Room Interior" },
+  { name: "room_light", alt: "Room Light" },
+  { name: "room_night", alt: "Room Night" },
+  { name: "moswasco_complex", alt: "Villa" },
+  { name: "window_view", alt: "Window View" },
 ];
 
 export default function Archive({ dark }: ArchiveProps) {
@@ -104,10 +80,10 @@ export default function Archive({ dark }: ArchiveProps) {
               className="overflow-hidden cursor-pointer group aspect-square"
               onClick={() => openLightbox(index)}
             >
-              <img
-                src={image.src}
+              <ResponsiveImage
+                name={image.name}
                 alt={image.alt}
-                loading="lazy"
+                role="grid"
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
             </div>
@@ -121,7 +97,7 @@ export default function Archive({ dark }: ArchiveProps) {
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
         slides={ARCHIVE_IMAGES.map((img) => ({
-          src: img.src,
+          src: getLargestUrl(img.name, "jpg"),
           alt: img.alt,
         }))}
         plugins={[Zoom, Fullscreen]}

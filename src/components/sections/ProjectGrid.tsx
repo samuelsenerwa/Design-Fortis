@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PROJECTS, { type Project } from "../../data/projects";
+import ResponsiveImage from "../ui/ResponsiveImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,10 +67,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       {/* Image */}
       <div className="relative w-full" style={{ paddingBottom: "75%" }}>
-        <img
-          src={project.image}
+        <ResponsiveImage
+          name={project.image}
           alt={project.title}
-          loading="lazy"
+          role="grid"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
