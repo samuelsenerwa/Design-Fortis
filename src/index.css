@@ -62,14 +62,6 @@ body {
   transition: color 0.3s, background-color 0.3s;
 }
 
-/* ── Custom cursor support ── */
-/* Applied to <html> only on fine-pointer, motion-enabled devices (see
-   CustomCursor.tsx) so the native cursor doesn't show alongside it. */
-.cursor-hide,
-.cursor-hide * {
-  cursor: none !important;
-}
-
 /* ── Reduced motion ── */
 /* Belt-and-braces global guard: individual motion components already skip
    their own animations under this preference, but this also disables any

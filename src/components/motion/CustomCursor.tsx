@@ -2,13 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 /**
- * Small lerped dot/ring cursor replacement. Desktop (fine-pointer) only —
- * never mounts on touch devices or under prefers-reduced-motion.
+ * Single large, transparent, thin-bordered circle that trails the cursor
+ * with inertial lag — matching the reference site's cursor treatment.
+ * Unlike a typical "custom cursor" replacement, the native OS cursor is
+ * never hidden; this circle is a secondary affordance layered on top.
  *
- * Two hover conventions on any element:
- *  - `data-cursor="hover"` — enlarges the plain ring.
- *  - `data-cursor-label="View Gallery"` — swaps the dot/ring for a larger
- *    circle with a centered text label (used for gallery/zoom affordances).
+ * Conventions (set on any element):
+ *  - `data-cursor="hover"` — shows the bare circle (no text).
+ *  - `data-cursor-label="View Gallery"` — shows the circle with a centered
+ *    uppercase text label. The attribute value can change while hovered
+ *    (e.g. toggling "Zoom In" / "Zoom Out") and the label updates live.
+ *
+ * Desktop (fine-pointer) only; never mounts under prefers-reduced-motion.
  */
 export default function CustomCursor() {
   const [enabled] = useState(() => {
@@ -17,87 +22,57 @@ export default function CustomCursor() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     return canHover && !prefersReducedMotion;
   });
-  const ringRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLDivElement>(null);
+  const circleRef = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState<string | null>(null);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("cursor-hide", enabled);
-    return () => document.documentElement.classList.remove("cursor-hide");
-  }, [enabled]);
 
   useEffect(() => {
     if (!enabled) return;
 
-    const ring = ringRef.current;
-    const dot = dotRef.current;
-    const labelEl = labelRef.current;
-    if (!ring || !dot || !labelEl) return;
+    const circle = circleRef.current;
+    if (!circle) return;
 
-    const targets = [ring, dot, labelEl];
-    const moveX = targets.map((el) => gsap.quickTo(el, "x", { duration: 0.45, ease: "power3.out" }));
-    const moveY = targets.map((el) => gsap.quickTo(el, "y", { duration: 0.45, ease: "power3.out" }));
+    const moveX = gsap.quickTo(circle, "x", { duration: 0.5, ease: "power3.out" });
+    const moveY = gsap.quickTo(circle, "y", { duration: 0.5, ease: "power3.out" });
 
     const handleMove = (e: MouseEvent) => {
-      moveX.forEach((fn) => fn(e.clientX));
-      moveY.forEach((fn) => fn(e.clientY));
-    };
+      moveX(e.clientX);
+      moveY(e.clientY);
 
-    const handleOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const labelTarget = target?.closest<HTMLElement>("[data-cursor-label]");
-      const hoverTarget = target?.closest('[data-cursor="hover"]');
+      // Poll the hovered element's current data-cursor-label on every move
+      // (not just mouseover) so labels that change while the cursor stays
+      // in place — e.g. a zoom toggle — are picked up immediately.
+      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+      const target = el?.closest<HTMLElement>('[data-cursor="hover"], [data-cursor-label]');
+      const nextLabel = target?.dataset.cursorLabel ?? (target ? "" : null);
 
-      setLabel(labelTarget?.dataset.cursorLabel ?? null);
-
-      gsap.to(ring, {
-        opacity: labelTarget ? 0 : 1,
-        scale: hoverTarget ? 2.2 : 1,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-      gsap.to(dot, { opacity: labelTarget ? 0 : 1, duration: 0.3 });
-      gsap.to(labelEl, {
-        opacity: labelTarget ? 1 : 0,
-        scale: labelTarget ? 1 : 0.8,
-        duration: 0.3,
+      setLabel((prev) => (prev === nextLabel ? prev : nextLabel));
+      gsap.to(circle, {
+        opacity: target ? 1 : 0,
+        duration: 0.25,
         ease: "power2.out",
       });
     };
 
     window.addEventListener("mousemove", handleMove);
-    window.addEventListener("mouseover", handleOver);
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("mouseover", handleOver);
     };
   }, [enabled]);
 
   if (!enabled) return null;
 
   return (
-    <>
-      <div
-        ref={dotRef}
-        className="fixed top-0 left-0 z-999 h-1.5 w-1.5 rounded-full bg-foreground pointer-events-none -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
-        aria-hidden="true"
-      />
-      <div
-        ref={ringRef}
-        className="fixed top-0 left-0 z-999 h-8 w-8 rounded-full border border-foreground pointer-events-none -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
-        aria-hidden="true"
-      />
-      <div
-        ref={labelRef}
-        className="fixed top-0 left-0 z-999 flex items-center justify-center h-32 w-32 rounded-full border border-white/70 bg-black/10 backdrop-blur-sm pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0"
-        aria-hidden="true"
-      >
-        <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-white text-center px-2">
+    <div
+      ref={circleRef}
+      className="fixed top-0 left-0 z-999 flex items-center justify-center h-42.5 w-42.5 rounded-full border border-white pointer-events-none -translate-x-1/2 -translate-y-1/2 mix-blend-difference opacity-0"
+      aria-hidden="true"
+    >
+      {label && (
+        <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white text-center px-2">
           {label}
         </span>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
