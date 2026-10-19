@@ -1,4 +1,4 @@
-import Button from "../ui/Button";
+import CtaBand from "../sections/CtaBand";
 
 interface FooterProps {
   dark: boolean;
@@ -7,50 +7,18 @@ interface FooterProps {
 export default function Footer({ dark }: FooterProps) {
   return (
     <footer
-      className={`max-w-[1920px] mx-auto px-6 md:px-12 py-8 mt-20 transition-colors duration-700 border-t ${
+      className={`max-w-480 mx-auto px-6 md:px-12 py-8 mt-20 transition-colors duration-700 border-t ${
         dark ? "bg-black border-white/15" : "bg-white border-black/15"
       }`}
     >
-      {/* Inquiries Section */}
-      <div className="max-w-[1920px] mx-auto px-6 md:px-12 py-8">
-        <div className="mb-12" />
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
-          <div className="max-w-2xl">
-            <h4
-              className={`text-xs font-bold uppercase tracking-[0.2em] mb-6 ${
-                dark ? "text-white/50" : "text-black/50"
-              }`}
-            >
-              Inquiries
-            </h4>
-            <h2
-              className={`text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] ${
-                dark ? "text-white" : "text-black"
-              }`}
-            >
-              Have a vision in mind?
-              <br />
-              <span className="opacity-50 font-light">
-                Let's build something timeless.
-              </span>
-            </h2>
-          </div>
-          <div>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => window.location.href = '/contact'}
-              className="px-6 py-4 md:px-10 md:py-6 lg:px-14 lg:py-8 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.25em] font-bold"
-              aria-label="Start a Project"
-            >
-              Start a Project
-            </Button>
-          </div>
-        </div>
-      </div>
+      <CtaBand
+        dark={dark}
+        heading="Have a vision in mind?"
+        subheading="Let's build something timeless."
+      />
 
       {/* Footer Bottom */}
-      <div className={`max-w-[1920px] mx-auto px-6 md:px-12 py-8 border-t ${dark ? "border-white/15" : "border-black/15"}`}>
+      <div className={`max-w-480 mx-auto px-6 md:px-12 py-8 border-t ${dark ? "border-white/15" : "border-black/15"}`}>
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div
             className={`text-xs uppercase tracking-widest opacity-60 ${

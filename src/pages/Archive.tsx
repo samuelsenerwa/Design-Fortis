@@ -1,12 +1,8 @@
-import { useState } from "react";
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-
-import "yet-another-react-lightbox/styles.css";
-
+import { useRef, useState } from "react";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
+import AppLightbox from "../components/ui/AppLightbox";
 import { getLargestUrl } from "../lib/imageManifest";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 interface ArchiveProps {
   dark: boolean;
@@ -42,6 +38,37 @@ const ARCHIVE_IMAGES = [
   { name: "window_view", alt: "Window View" },
 ];
 
+function ArchiveItem({
+  name,
+  alt,
+  index,
+  onOpen,
+}: {
+  name: string;
+  alt: string;
+  index: number;
+  onOpen: (index: number) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useScrollReveal(ref, { delayIndex: index % 4, staggerStep: 0.08, y: 30, start: "top 95%" });
+
+  return (
+    <div
+      ref={ref}
+      className="overflow-hidden cursor-pointer group aspect-square"
+      data-cursor-label="View"
+      onClick={() => onOpen(index)}
+    >
+      <ResponsiveImage
+        name={name}
+        alt={alt}
+        role="grid"
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+      />
+    </div>
+  );
+}
+
 export default function Archive({ dark }: ArchiveProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -75,40 +102,27 @@ export default function Archive({ dark }: ArchiveProps) {
       <div className=" mx-auto px-6 md:px-10 mt-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {ARCHIVE_IMAGES.map((image, index) => (
-            <div
+            <ArchiveItem
               key={index}
-              className="overflow-hidden cursor-pointer group aspect-square"
-              onClick={() => openLightbox(index)}
-            >
-              <ResponsiveImage
-                name={image.name}
-                alt={image.alt}
-                role="grid"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-            </div>
+              name={image.name}
+              alt={image.alt}
+              index={index}
+              onOpen={openLightbox}
+            />
           ))}
         </div>
       </div>
 
       {/* Lightbox */}
-      <Lightbox
+      <AppLightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
+        title="Archive"
         slides={ARCHIVE_IMAGES.map((img) => ({
           src: getLargestUrl(img.name, "jpg"),
           alt: img.alt,
         }))}
-        plugins={[Zoom, Fullscreen]}
-        zoom={{
-          maxZoomPixelRatio: 3,
-          scrollToZoom: true,
-        }}
-        styles={{
-          container: { backgroundColor: "rgba(0, 0, 0, 0.92)" },
-        }}
-        controller={{ closeOnBackdropClick: true }}
       />
     </main>
   );

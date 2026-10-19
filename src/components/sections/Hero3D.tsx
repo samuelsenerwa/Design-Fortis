@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
+import { isWebGLAvailable } from "../../hooks/useWebGLSupport";
 
 // ─────────────────────────────────────────────
 // Configuration
@@ -134,6 +135,7 @@ export default function Hero3D({ dark }: Hero3DProps) {
   // ── Scene setup (runs once) ──
   useEffect(() => {
     if (!containerRef.current) return;
+    if (!isWebGLAvailable()) return; // graceful no-op fallback on unsupported devices
 
     const container = containerRef.current;
     const width = container.clientWidth;
@@ -141,7 +143,12 @@ export default function Hero3D({ dark }: Hero3DProps) {
     const isMobile = width < 768;
 
     // ── Renderer ──
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch {
+      return;
+    }
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);

@@ -1,5 +1,8 @@
+import { useRef } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import Button from "../components/ui/Button";
+import { useSplitTextReveal } from "../hooks/useSplitTextReveal";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 interface ContactUsProps {
   dark: boolean;
@@ -7,6 +10,10 @@ interface ContactUsProps {
 
 export default function ContactUs({ dark }: ContactUsProps) {
   const [state, handleSubmit] = useForm("mykbeoyn");
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  useSplitTextReveal(headingRef, { type: "words" });
+  useScrollReveal(formRef, { delayIndex: 1, staggerStep: 0.15 });
 
   return (
     <main
@@ -19,6 +26,7 @@ export default function ContactUs({ dark }: ContactUsProps) {
           {/* Left Column - Contact Info */}
           <div className="space-y-12">
             <h2
+              ref={headingRef}
               className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-tight leading-tight mb-8 ${
                 dark ? "text-white" : "text-black"
               }`}
@@ -122,7 +130,7 @@ export default function ContactUs({ dark }: ContactUsProps) {
           </div>
 
           {/* Right Column - Contact Form */}
-          <div>
+          <div ref={formRef}>
             {state.succeeded ? (
               <div className="py-12">
                 <p className={`text-lg font-normal ${dark ? "text-white" : "text-black"}`}>
@@ -223,6 +231,7 @@ export default function ContactUs({ dark }: ContactUsProps) {
                   <Button
                     disabled={state.submitting}
                     variant="outline"
+                    data-cursor="hover"
                     className="w-full"
                   >
                     {state.submitting ? "SENDING..." : "SEND MESSAGE"}

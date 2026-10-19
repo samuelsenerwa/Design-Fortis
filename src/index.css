@@ -61,3 +61,26 @@ body {
   background-color: var(--color-background);
   transition: color 0.3s, background-color 0.3s;
 }
+
+/* ── Custom cursor support ── */
+/* Applied to <html> only on fine-pointer, motion-enabled devices (see
+   CustomCursor.tsx) so the native cursor doesn't show alongside it. */
+.cursor-hide,
+.cursor-hide * {
+  cursor: none !important;
+}
+
+/* ── Reduced motion ── */
+/* Belt-and-braces global guard: individual motion components already skip
+   their own animations under this preference, but this also disables any
+   incidental CSS transitions/animations that might otherwise still run. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

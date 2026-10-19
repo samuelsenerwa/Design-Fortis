@@ -1,22 +1,71 @@
 import { useParams, Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getProjectBySlug } from "../data/projects";
 import Button from "../components/ui/Button";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
+import AppLightbox from "../components/ui/AppLightbox";
 import { getLargestUrl } from "../lib/imageManifest";
-import Lightbox from "yet-another-react-lightbox";
-import Counter from "yet-another-react-lightbox/plugins/counter";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/counter.css";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { useSplitTextReveal } from "../hooks/useSplitTextReveal";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 interface ProjectDetailProps {
   dark: boolean;
+}
+
+interface GalleryRowProps {
+  left?: string;
+  right?: string;
+  isEven: boolean;
+  rowIdx: number;
+  title: string;
+  onOpen: (index: number) => void;
+}
+
+function GalleryRow({ left, right, isEven, rowIdx, title, onOpen }: GalleryRowProps) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  useScrollReveal(rowRef, { delayIndex: rowIdx, staggerStep: 0.1, start: "top 92%" });
+
+  return (
+    <div ref={rowRef} className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+      {left && (
+        <div
+          className={`overflow-hidden cursor-pointer ${
+            isEven ? "md:col-span-7" : "md:col-span-5 md:mt-12"
+          }`}
+          data-cursor-label="Zoom In"
+          onClick={() => onOpen(rowIdx * 2)}
+        >
+          <ResponsiveImage
+            name={left}
+            alt={`${title} — ${rowIdx * 2 + 1}`}
+            role="gallery"
+            className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
+              isEven ? "aspect-4/3" : "aspect-3/4"
+            }`}
+          />
+        </div>
+      )}
+
+      {right && (
+        <div
+          className={`overflow-hidden cursor-pointer ${
+            isEven ? "md:col-span-5 md:mt-16" : "md:col-span-7"
+          }`}
+          data-cursor-label="Zoom In"
+          onClick={() => onOpen(rowIdx * 2 + 1)}
+        >
+          <ResponsiveImage
+            name={right}
+            alt={`${title} — ${rowIdx * 2 + 2}`}
+            role="gallery"
+            className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
+              isEven ? "aspect-3/4" : "aspect-4/3"
+            }`}
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function ProjectDetail({ dark }: ProjectDetailProps) {
@@ -31,7 +80,13 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       setLightboxIndex(index);
       setLightboxOpen(true);
     };
-  
+
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const introRef = useRef<HTMLParagraphElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+  useSplitTextReveal(headingRef, { type: "words" });
+  useScrollReveal(introRef, { delayIndex: 1, staggerStep: 0.15 });
+  useScrollReveal(detailsRef, { delayIndex: 2, staggerStep: 0.15 });
 
   // Scroll to top on mount
   useEffect(() => {
@@ -51,6 +106,7 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       {/* Hero image — full width */}
       <div 
         className="w-full aspect-16/7 overflow-hidden cursor-pointer"
+        data-cursor-label="View Gallery"
         onClick={() => openLightbox(0)}
       >
         <ResponsiveImage
@@ -71,10 +127,14 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         >
           {project.category}
         </p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight leading-tight">
+        <h1
+          ref={headingRef}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight leading-tight"
+        >
           {project.title}
         </h1>
         <p
+          ref={introRef}
           className={`mt-6 text-base md:text-lg font-light leading-relaxed max-w-2xl ${
             dark ? "text-white/60" : "text-black/60"
           }`}
@@ -84,7 +144,7 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       </div>
 
       {/* Project details grid */}
-      <div className="max-w-5xl mx-auto px-6 md:px-10 mt-12">
+      <div ref={detailsRef} className="max-w-5xl mx-auto px-6 md:px-10 mt-12">
         <div
           className={`grid grid-cols-2 sm:grid-cols-4 gap-8 py-8 border-t border-b ${
             dark ? "border-white/10" : "border-black/10"
@@ -148,59 +208,17 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       <div className="max-w-6xl mx-auto px-6 md:px-10 mt-16">
         <div className="flex flex-col gap-10 md:gap-16">
           {/* Pair images into rows of 2 */}
-          {Array.from(
-            { length: Math.ceil(project.gallery.length / 2) },
-            (_, rowIdx) => {
-              const left = project.gallery[rowIdx * 2];
-              const right = project.gallery[rowIdx * 2 + 1];
-              const isEven = rowIdx % 2 === 0;
-
-              return (
-                <div
-                  key={rowIdx}
-                  className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start"
-                >
-                  {/* Left image */}
-                  {left && (
-                    <div
-                      className={`overflow-hidden cursor-pointer ${
-                        isEven ? "md:col-span-7" : "md:col-span-5 md:mt-12"
-                      }`}
-                      onClick={() => openLightbox(rowIdx * 2)}
-                    >
-                      <ResponsiveImage
-                        name={left}
-                        alt={`${project.title} — ${rowIdx * 2 + 1}`}
-                        role="gallery"
-                        className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
-                          isEven ? "aspect-4/3" : "aspect-3/4"
-                        }`}
-                      />
-                    </div>
-                  )}
-
-                  {/* Right image */}
-                  {right && (
-                    <div
-                      className={`overflow-hidden cursor-pointer ${
-                        isEven ? "md:col-span-5 md:mt-16" : "md:col-span-7"
-                      }`}
-                      onClick={() => openLightbox(rowIdx * 2 + 1)}
-                    >
-                      <ResponsiveImage
-                        name={right}
-                        alt={`${project.title} — ${rowIdx * 2 + 2}`}
-                        role="gallery"
-                        className={`w-full object-cover transition-transform duration-1000 ease-out hover:scale-110 ${
-                          isEven ? "aspect-3/4" : "aspect-4/3"
-                        }`}
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            }
-          )}
+          {Array.from({ length: Math.ceil(project.gallery.length / 2) }, (_, rowIdx) => (
+            <GalleryRow
+              key={rowIdx}
+              rowIdx={rowIdx}
+              left={project.gallery[rowIdx * 2]}
+              right={project.gallery[rowIdx * 2 + 1]}
+              isEven={rowIdx % 2 === 0}
+              title={project.title}
+              onOpen={openLightbox}
+            />
+          ))}
         </div>
       </div>
 
@@ -223,33 +241,16 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         </div>
       </div>
 
-      {/* Lightbox with plugins */}
-      <Lightbox
+      {/* Gallery lightbox */}
+      <AppLightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
+        title={project.title}
         slides={project.gallery.map((name) => ({
           src: getLargestUrl(name, "jpg"),
           alt: project.title,
         }))}
-        plugins={[Counter, Fullscreen, Slideshow, Thumbnails, Zoom]}
-        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
-        thumbnails={{
-          position: "bottom",
-          width: 80,
-          height: 60,
-          gap: 4,
-          borderRadius: 4,
-        }}
-        zoom={{
-          maxZoomPixelRatio: 3,
-          scrollToZoom: true,
-        }}
-        slideshow={{ delay: 3000 }}
-        styles={{
-          container: { backgroundColor: "rgba(0, 0, 0, 0.92)" },
-        }}
-        controller={{ closeOnBackdropClick: true }}
       />
     </main>
   );
