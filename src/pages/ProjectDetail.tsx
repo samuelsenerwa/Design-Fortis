@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getProjectBySlug } from "../data/projects";
 import Button from "../components/ui/Button";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
-import AppLightbox from "../components/ui/AppLightbox";
+import GalleryModal from "../components/gallery/GalleryModal";
 import { getLargestUrl } from "../lib/imageManifest";
 import { useSplitTextReveal } from "../hooks/useSplitTextReveal";
 import { useScrollReveal } from "../hooks/useScrollReveal";
@@ -73,13 +73,13 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
   const navigate = useNavigate();
   const project = slug ? getProjectBySlug(slug) : undefined;
 
-    const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxIndex, setLightboxIndex] = useState(0);
-  
-    const openLightbox = (index: number) => {
-      setLightboxIndex(index);
-      setLightboxOpen(true);
-    };
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
+  const openGallery = (index: number) => {
+    setGalleryIndex(index);
+    setGalleryOpen(true);
+  };
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
@@ -107,7 +107,7 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
       <div 
         className="w-full aspect-16/7 overflow-hidden cursor-pointer"
         data-cursor-label="View Gallery"
-        onClick={() => openLightbox(0)}
+        onClick={() => openGallery(0)}
       >
         <ResponsiveImage
           name={project.image}
@@ -216,7 +216,7 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
               right={project.gallery[rowIdx * 2 + 1]}
               isEven={rowIdx % 2 === 0}
               title={project.title}
-              onOpen={openLightbox}
+              onOpen={openGallery}
             />
           ))}
         </div>
@@ -241,15 +241,15 @@ export default function ProjectDetail({ dark }: ProjectDetailProps) {
         </div>
       </div>
 
-      {/* Gallery lightbox */}
-      <AppLightbox
-        open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
-        index={lightboxIndex}
+      {/* Gallery viewer */}
+      <GalleryModal
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        index={galleryIndex}
         title={project.title}
-        slides={project.gallery.map((name) => ({
-          src: getLargestUrl(name, "jpg"),
-          alt: project.title,
+        slides={project.gallery.map((name, i) => ({
+          src: getLargestUrl(name, "webp"),
+          alt: `${project.title} — ${i + 1}`,
         }))}
       />
     </main>

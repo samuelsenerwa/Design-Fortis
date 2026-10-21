@@ -1051,8 +1051,6 @@ html.lv-root {
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-backdrop-filter: blur(var(--u16));
-  backdrop-filter: blur(var(--u16));
 }
 .lv .btn-circle .l1 {
   color: #fff;
@@ -1677,6 +1675,97 @@ html.lv-root {
   .lv .input_field { font-size: calc(18 * var(--px)); }
   .lv .modal_cta { pointer-events: auto; }
   .lv .form_error { position: static; }
+}
+
+/* ── gallery modal ──
+   The viewer is portalled onto other routes (project pages, archive) where html is
+   not 1vw, so this variant derives the same unit straight from the viewport. */
+.lv.lv-vw {
+  --px: calc(1vw / var(--ratio));
+  font-size: 1vw;
+}
+.lv .modal_gallery {
+  pointer-events: auto;
+  position: relative;
+  height: 100%;
+  margin-left: calc(var(--offset) * -1);
+  margin-right: calc(var(--offset) * -1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.lv .modal_gallery_content {
+  flex: none;
+  height: 100%;
+  padding-top: var(--u8);
+  padding-bottom: var(--u8);
+  margin-left: calc((var(--cell) * 2) + (var(--grid-gap) * 2));
+  margin-right: calc((var(--cell) * 2) + (var(--grid-gap) * 2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.lv .img.modal_gallery_img {
+  flex: none;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  cursor: zoom-in;
+  will-change: transform;
+}
+.lv .modal_pag {
+  z-index: 5;
+  flex: none;
+  position: absolute;
+  inset: auto 0 0;
+  margin-left: calc(var(--cell) + var(--grid-gap));
+  margin-right: calc(var(--cell) + var(--grid-gap));
+}
+/* Calibrated against the original at 1920x1080 (line at y=961, caps 1007-1015): the
+   substitute UI font sits a hair differently in its line box than the original. */
+.lv .modal_pag > .u-48 {
+  height: calc(var(--u48) + var(--p1) * 0.83);
+}
+.lv .modal_pag .pag > .u-32 {
+  height: calc(var(--u32) + var(--p1) * 1.67);
+}
+.lv .pag_progress {
+  height: 1px;
+  background-color: var(--line);
+}
+.lv .pag_progress_active {
+  width: 0%;
+  height: 100%;
+  background-color: var(--text);
+}
+.lv .pag_list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lv .pag_r {
+  display: flex;
+  gap: var(--u32);
+  justify-content: center;
+  align-items: center;
+}
+.lv .pag-list {
+  display: flex;
+  gap: var(--u8);
+  justify-content: center;
+  align-items: center;
+}
+.lv .img-over-grad.base-1000 {
+  background-image: linear-gradient(#211a1900, #211a19cc);
+}
+@media (max-width: 991px) {
+  .lv .modal_pag,
+  .lv .modal_gallery_content {
+    margin-left: var(--offset);
+    margin-right: var(--offset);
+  }
 }
 
 /* ── cookies ── */
