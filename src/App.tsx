@@ -16,12 +16,14 @@ const About = lazy(() => import('./pages/About'))
 const ContactUs = lazy(() => import('./pages/ContactUs'))
 
 /**
- * The home page is a self-contained experience (its own header, cursor,
+ * The home and about pages are self-contained experiences (its own header, cursor,
  * scroll engine and footer), so the shared chrome only mounts on other routes.
  */
 function Shell() {
   const { dark, toggle } = useTheme()
-  const isHome = useLocation().pathname === '/'
+  const { pathname } = useLocation()
+  // Home and About are self-contained (own header, cursor, scroll engine and footer).
+  const isHome = pathname === '/' || pathname === '/about'
 
   return (
     <>
@@ -34,7 +36,7 @@ function Shell() {
               <Route path="/" element={<HomePage />} />
               <Route path="/work/:slug" element={<ProjectDetail dark={dark} />} />
               <Route path="/archive" element={<Archive dark={dark} />} />
-              <Route path="/about" element={<About dark={dark} />} />
+              <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactUs dark={dark} />} />
             </Routes>
           </Suspense>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import gsap from "gsap";
+import { shouldSkipWipe } from "../../home/pageTransition";
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -22,6 +23,9 @@ export default function PageTransition({ children }: PageTransitionProps) {
       isFirstRender.current = false;
       return;
     }
+
+    // Home <-> About run their own page transition.
+    if (shouldSkipWipe()) return;
 
     const overlay = overlayRef.current;
     if (!overlay) return;
