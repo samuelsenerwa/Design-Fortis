@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 interface SmoothScrollProviderProps {
   children: ReactNode;
+  /** Off on routes that bring their own scroll engine (the home page uses Lenis). */
+  enabled?: boolean;
 }
 
 /**
@@ -17,7 +19,7 @@ interface SmoothScrollProviderProps {
  * momentum scroll already feels good there, and it avoids fighting mobile
  * browser chrome/URL-bar show-hide behavior).
  */
-export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
+export default function SmoothScrollProvider({ children, enabled = true }: SmoothScrollProviderProps) {
   const smootherRef = useRef<ScrollSmoother | null>(null);
   const location = useLocation();
 
@@ -25,7 +27,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-    if (prefersReducedMotion || isCoarsePointer) return;
+    if (!enabled || prefersReducedMotion || isCoarsePointer) return;
 
     smootherRef.current = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -39,7 +41,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       smootherRef.current?.kill();
       smootherRef.current = null;
     };
-  }, []);
+  }, [enabled]);
 
   // Refresh ScrollTrigger measurements whenever the route changes (SPA
   // navigation can change document height without a full reload).

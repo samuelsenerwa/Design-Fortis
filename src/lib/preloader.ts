@@ -1,7 +1,9 @@
-// Shared state between the Preloader overlay and anything that should wait
-// for it (e.g. the Hero intro). Decided once at module load so every consumer
-// sees the same answer regardless of effect ordering.
+// Shared state between the home Preloader and anything that has to wait for it.
+// Decided once at module load so every consumer agrees regardless of effect order.
 export const PRELOADER_SESSION_KEY = "df-preloader-shown";
+/** Fired while the reveal is under way: the page can wire up its scripts now. */
+export const PRELOADER_INIT_EVENT = "preloader:init";
+/** Fired when the overlay has fully left. */
 export const PRELOADER_DONE_EVENT = "preloader:done";
 
 let active =
@@ -12,6 +14,10 @@ let active =
 /** True while the preloader is (or is about to be) on screen. */
 export function isPreloaderActive() {
   return active;
+}
+
+export function markPreloaderInit() {
+  window.dispatchEvent(new Event(PRELOADER_INIT_EVENT));
 }
 
 export function finishPreloader() {
