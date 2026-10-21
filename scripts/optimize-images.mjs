@@ -44,6 +44,32 @@ function run(args) {
   execFileSync("ffmpeg", args, { stdio: ["ignore", "ignore", "pipe"] });
 }
 
+function sourceWidth(srcPath) {
+  const out = execFileSync(
+    "ffprobe",
+    ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width", "-of", "csv=p=0", srcPath],
+    { encoding: "utf8" }
+  );
+  return Number.parseInt(out.trim(), 10);
+}
+
+/**
+ * Widths to generate for one source. Never upscales: a source narrower than
+ * the top of the ladder gets the steps below its native width plus one
+ * derivative at the native width, instead of several identical copies.
+ *
+ * Only applied to a basename that has no derivatives yet, so assets that were
+ * already optimised keep their existing file names (and the imports built on them).
+ */
+function widthsFor(srcPath, outDir) {
+  const hasOutput = existsSync(outDir) && readdirSync(outDir).length > 0;
+  if (hasOutput) return WIDTHS;
+  const native = sourceWidth(srcPath);
+  if (!Number.isFinite(native) || native >= WIDTHS[WIDTHS.length - 1]) return WIDTHS;
+  const below = WIDTHS.filter((w) => w < native);
+  return [...below, native];
+}
+
 function generateDerivative(srcPath, outPath, width, format) {
   if (existsSync(outPath)) return; // idempotent re-runs
   const scale = `scale='min(${width},iw)':-2`;
@@ -83,9 +109,10 @@ function main() {
     }
 
     const outDir = path.join(OUTPUT_DIR, basename);
+    const widths = widthsFor(srcPath, outDir);
     mkdirSync(outDir, { recursive: true });
 
-    for (const width of WIDTHS) {
+    for (const width of widths) {
       for (const format of ["webp", "jpg"]) {
         const outPath = path.join(outDir, `${basename}-${width}.${format}`);
         const existed = existsSync(outPath);
