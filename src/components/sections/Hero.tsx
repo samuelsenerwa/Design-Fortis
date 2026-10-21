@@ -5,6 +5,7 @@ import { Volume2, VolumeX } from "lucide-react";
 import Button from "../ui/Button";
 import ResponsiveImage from "../ui/ResponsiveImage";
 import { getLargestUrl } from "../../lib/imageManifest";
+import { PRELOADER_DONE_EVENT, isPreloaderActive } from "../../lib/preloader";
 import heroVideoSrc from "../../assets/hero_video.mp4";
 
 gsap.registerPlugin(SplitText);
@@ -60,12 +61,17 @@ export default function Hero() {
     gsap.set(split.words, { opacity: 0, y: "60%" });
     gsap.set([subRef.current, ctaRef.current], { opacity: 0, y: 16 });
 
-    const tl = gsap.timeline({ delay: 0.3 });
+    // Hold the intro until the preloader has finished revealing the hero.
+    const waiting = isPreloaderActive();
+    const tl = gsap.timeline({ delay: waiting ? 0 : 0.3, paused: waiting });
+    const start = () => tl.delay(0.15).play();
+    if (waiting) window.addEventListener(PRELOADER_DONE_EVENT, start, { once: true });
     tl.to(split.words, { opacity: 1, y: "0%", duration: 0.9, stagger: 0.06, ease: "power3.out" })
       .to(subRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
       .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5");
 
     return () => {
+      window.removeEventListener(PRELOADER_DONE_EVENT, start);
       tl.kill();
       split.revert();
     };
