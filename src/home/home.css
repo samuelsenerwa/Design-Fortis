@@ -257,6 +257,10 @@ html.lv-root {
 
 /* ── layout ── */
 .lv .container {
+  /* Tailwind's own `.container` caps max-width at 96rem, which at 1rem = 1vw
+     leaves a dark strip on the right of full-bleed sections on wide screens. */
+  max-width: none;
+  width: 100%;
   padding-left: var(--offset);
   padding-right: var(--offset);
 }
