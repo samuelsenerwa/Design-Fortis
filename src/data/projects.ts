@@ -234,6 +234,15 @@ const PROJECTS: Project[] = [
         { label: "Client", value: "Nordic Stays Group" },
       ],
       amenities: ["olerian_mara_olosho_enkaji_cottages", "olerian_mara_lounge", "olerian_mara_interior_view", "olerian_mara_sideview"],
+      masterplan: {
+        image: "olerian_mara_ground_level_view",
+        hotspots: [
+          { id: "nordic-lounge", x: 55, y: 42, title: "The Lounge", text: "A woven timber shell gathers the main living space around the fire, with the water visible from every seat." },
+          { id: "nordic-tower", x: 66, y: 17, title: "Lookout Ring", text: "A raised walkway leads to a circular lookout above the treeline, the best place to read the lake at dusk." },
+          { id: "nordic-cottages", x: 52, y: 68, title: "Guest Cottages", text: "Cottages follow the contour in a gentle curve, each turned to its own view and linked by timber boardwalks." },
+          { id: "nordic-spa", x: 17, y: 72, title: "Spa & Plunge Pool", text: "A sunken pool and spa pavilion sit at the water's edge, sheltered by planting and low stone walls." },
+        ],
+      },
       inside: [
         {
           title: "Arrival",
@@ -284,6 +293,14 @@ const PROJECTS: Project[] = [
         { label: "Client", value: "Private" },
       ],
       amenities: ["olerian_mara_cocoon_couple_cottages", "olerian_mara_cottages_walkways", "cocoonschema", "olerian_mara_ground_level_view"],
+      masterplan: {
+        image: "olerian_mara_sideview",
+        hotspots: [
+          { id: "fjord-cabin", x: 34, y: 71, title: "The Cabin", text: "A single angular volume of local timber, turned from the wind and set to catch the low winter sun." },
+          { id: "fjord-shore", x: 17, y: 88, title: "The Shoreline", text: "The cabin steps down the rock toward the fjord, leaving the natural edge of the site untouched." },
+          { id: "fjord-neighbours", x: 62, y: 85, title: "Neighbouring Cabins", text: "Other dwellings sit well apart among the trees, so every cabin keeps its own horizon." },
+        ],
+      },
       inside: [
         {
           title: "The Cabin",
@@ -436,14 +453,6 @@ const PROJECTS: Project[] = [
         { label: "Client", value: "Private" },
       ],
       amenities: ["shot_01", "shot_04", "shot_08", "shot_10", "shot_09"],
-      masterplan: {
-        image: "olerian_mara_sideview",
-        hotspots: [
-          { id: "terrace-steps", x: 30, y: 70, title: "Stepped Approach", text: "Wide limestone steps climb the slope through native grasses to the entrance terrace." },
-          { id: "terrace-canopy", x: 58, y: 48, title: "Timber Canopy", text: "A deep timber soffit shades the glazing and frames views over the valley." },
-          { id: "terrace-stone", x: 76, y: 62, title: "Local Stone", text: "Dry-stone walls and columns are built from stone gathered nearby, weathering into the hillside." },
-        ],
-      },
       inside: [
         {
           title: "The Terrace",
