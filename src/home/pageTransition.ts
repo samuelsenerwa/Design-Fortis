@@ -22,7 +22,8 @@ import { lockScroll, unlockScroll } from "./runtime";
  */
 
 /** Routes that run the Lenval-style runtime and so can hand over to each other. */
-const LV_ROUTES = new Set(["/", "/about"]);
+const LV_ROUTES = new Set(["/", "/about", "/projects", "/contact"]);
+export const isLvPath = (pathname: string) => LV_ROUTES.has(pathname) || pathname.startsWith("/projects/");
 /** The ground the old page fades into. */
 const GROUND = "#211a19";
 /** Above the fixed header (1200), modals and the cookie banner. */
@@ -147,7 +148,7 @@ export function armPageTransitions(root: HTMLElement) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const link = (e.target as Element).closest?.("a[href]") as HTMLAnchorElement | null;
     if (!link || link.target === "_blank" || link.origin !== window.location.origin) return;
-    if (!LV_ROUTES.has(link.pathname) || link.pathname === window.location.pathname) return;
+    if (!isLvPath(link.pathname) || link.pathname === window.location.pathname) return;
     prepareLeave(root);
   };
   root.addEventListener("click", onClick, true);

@@ -622,7 +622,23 @@ export function initHomeScripts(
       const MARGIN = 8;
       const tips = new Map<string, HTMLElement>();
       const active = new Set<HTMLElement>();
-      $$("[floating-tip]").forEach((tip) => tips.set(tip.getAttribute("floating-tip")!, tip));
+      // Tips with text (project hotspots) write their lines in and out; circles have none.
+      const writers = {
+        slide: animateImg,
+        h: animateTextH,
+        p: animateTextP,
+        line: animateLine,
+        ctn: animateCtn,
+      } as const;
+      const parts = new Map<HTMLElement, HTMLElement[]>();
+      const play = (el: HTMLElement, mode: "initial" | "reveal" | "hide", delay: number) =>
+        writers[el.dataset.el as keyof typeof writers]?.(el, mode, delay);
+      $$("[floating-tip]").forEach((tip) => {
+        tips.set(tip.getAttribute("floating-tip")!, tip);
+        const els = $$("[data-el]", tip);
+        parts.set(tip, els);
+        els.forEach((el) => play(el, "initial", 0));
+      });
 
       const clamped = (el: HTMLElement, x: number, y: number) => {
         const r = el.getBoundingClientRect();
@@ -637,10 +653,12 @@ export function initHomeScripts(
         gsap.set(tip, clamped(tip, x, y));
         tip.classList.add("is-active");
         active.add(tip);
+        parts.get(tip)?.forEach((el, i) => play(el, "reveal", i * stagger));
       };
       const hide = (tip: HTMLElement) => {
         tip.classList.remove("is-active");
         active.delete(tip);
+        parts.get(tip)?.forEach((el) => play(el, "hide", 0));
       };
 
       const move = (e: MouseEvent) => {

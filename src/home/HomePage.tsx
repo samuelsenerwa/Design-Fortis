@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
@@ -8,6 +8,7 @@ import {
   isPreloaderActive,
 } from "../lib/preloader";
 import "./home.css";
+import { projectPath } from "../data/projects";
 import {
   ABOUT,
   ARCH,
@@ -23,11 +24,8 @@ import { Btn, DotIcon, Hairlines, Label } from "./parts";
 import Preloader from "./Preloader";
 import { destroyLenis, ensureLenis } from "./lenis";
 import { durL, fontsReady } from "./motion";
-import { armPageTransitions, beginEnter, isTransitioning, onTransitionSettled, type Entry } from "./pageTransition";
+import { armPageTransitions, beginEnter, onTransitionSettled, type Entry } from "./pageTransition";
 import { initHomeScripts } from "./runtime";
-
-// three.js is only needed for the pointer-trail effect, so keep it out of the first load.
-const FluidCursor = lazy(() => import("./FluidCursor"));
 
 /** Reads "P" + index the way the data card is laid out (letter, then number). */
 function IndexTag({ value }: { value: string }) {
@@ -50,25 +48,6 @@ export default function HomePage() {
     return !narrow && !reducedData && !saveData;
   });
   const onPreloaderDone = useCallback(() => {}, []);
-  // The WebGL pointer trail takes a couple of hundred ms to set up; never inside a page transition.
-  const [cursorReady, setCursorReady] = useState(() => !isTransitioning());
-  useEffect(() => {
-    if (cursorReady) return;
-    // Even once the transition is over, wait for an idle moment (and a beat) so the one-off
-    // WebGL set-up doesn't land on the page the user has just arrived at.
-    let timer = 0;
-    const off = onTransitionSettled(() => {
-      timer = window.setTimeout(() => {
-        const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
-        idle(() => setCursorReady(true), { timeout: 1500 });
-      }, 800);
-    });
-    return () => {
-      off();
-      window.clearTimeout(timer);
-    };
-  }, [cursorReady]);
-
   // The whole layout is sized in vw units off the root font-size; set it before paint.
   useLayoutEffect(() => {
     document.documentElement.classList.add("lv-root");
@@ -128,11 +107,6 @@ export default function HomePage() {
   return (
     <div ref={rootRef} className="lv transition-wrapper">
       <Preloader pageRef={pageRef} onDone={onPreloaderDone} />
-      {cursorReady && (
-        <Suspense fallback={null}>
-          <FluidCursor />
-        </Suspense>
-      )}
 
       <main ref={pageRef} className="transition-container">
         <SiteHeader />
@@ -371,7 +345,7 @@ export default function HomePage() {
                       <div key={project.slug} data-mob="off" data-parallax="w" className="project-card">
                         <Link
                           floating-tip-trigger="view-project"
-                          to={`/work/${project.slug}`}
+                          to={projectPath(project.slug)}
                           className="project-card_link"
                           aria-label={`View ${project.title}`}
                         />
@@ -521,7 +495,7 @@ export default function HomePage() {
                         </p>
                         <div className="u-24" />
                         <div data-scroll-reveal="ctn" className="purpose-s_desc_btn">
-                          <Btn text="Learn more" to="/archive" />
+                          <Btn text="Learn more" to="/projects" />
                         </div>
                       </div>
                     </div>

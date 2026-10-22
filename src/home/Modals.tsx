@@ -42,7 +42,7 @@ const CloseIcon = () => (
   </svg>
 );
 
-function CloseButton() {
+export function CloseButton() {
   return (
     <div data-modal-close="" className="modal_close">
       <div data-magnetic-strength="" className="btn-close">

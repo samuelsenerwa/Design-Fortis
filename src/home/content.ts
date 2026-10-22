@@ -12,7 +12,7 @@ export const LOADER = {
 export const HEADER = {
   nav: [
     { label: "About us", to: "/about" },
-    { label: "Projects", to: "/archive" },
+    { label: "Projects", to: "/projects" },
     { label: "Contact", to: "/contact" },
   ],
   timezoneLabel: "KE",
@@ -21,7 +21,7 @@ export const HEADER = {
 export const HERO = {
   title: "Setting the Standard, One Design at a Time",
   poster: "hero_poster",
-  caption: { index: "01", name: "Showreel", place: "Mombasa, Kenya", to: "/archive" },
+  caption: { index: "01", name: "Showreel", place: "Mombasa, Kenya", to: "/projects" },
 };
 
 export const ABOUT = {
@@ -61,7 +61,7 @@ export const PURPOSE = {
   words: ["Crafting", "Enduring", "Spaces"],
   text: "Each project begins with a clear vision: to create spaces that balance form, function and a strong sense of place — architecture built with precision and purpose.",
   image: "olerian_mara_olosho_enkaji_cottages",
-  caption: { index: "03", name: "Nordic Retreat", place: "Jämtland, Sweden", to: "/work/nordic-retreat" },
+  caption: { index: "03", name: "Nordic Retreat", place: "Jämtland, Sweden", to: "/projects/nordic-retreat" },
 };
 
 export const SERVICES = {
@@ -125,7 +125,7 @@ export const FOOTER = {
   explore: [
     { label: "Home", to: "/" },
     { label: "About us", to: "/about" },
-    { label: "Projects", to: "/archive" },
+    { label: "Projects", to: "/projects" },
     { label: "Contact", to: "/contact" },
   ],
 };
@@ -177,12 +177,33 @@ export const ABOUT_PAGE = {
     cta: "Begin the Conversation",
     image: "olerian_mara_cottages_walkways",
     alt: "Sunlit timber deck with loungers beneath a woven roof",
-    caption: { index: "03", name: "Nordic Retreat", place: "Jämtland, Sweden", to: "/work/nordic-retreat" },
+    caption: { index: "03", name: "Nordic Retreat", place: "Jämtland, Sweden", to: "/projects/nordic-retreat" },
   },
   cta: {
     quote: "“Every Design Fortis project begins and ends with the highest standards of integrity”",
     text: "Integrity is the foundation of every decision we make. From identifying opportunities and selecting partners to managing construction and delivering completed projects, we are guided by transparency and accountability.",
     image: "olerian_mara_interior_view",
     alt: "Lattice timber dome over a lounge with hanging greenery",
+  },
+};
+
+/** /contact — copy. The form itself lives in the shared contact panel (Modals.tsx). */
+export const CONTACT_PAGE = {
+  label: "Get in Touch",
+  title: ["We Look Forward", "to Partnering with You"],
+  emailLabel: "Write us",
+  text: "We do not advertise. We respond. If you have found us, you already know what you are looking for. Every message is read and answered personally, in complete confidence.",
+};
+
+/** /projects — the index page's own copy. */
+export const PROJECTS_PAGE = {
+  title: "Spaces Defined by Uncompromising Detail",
+  subtitle: "Considered buildings, designed and built to endure",
+  lead: "Architecture Shaped by Place and Purpose.",
+  cta: {
+    quote: ["“Every Design Fortis project begins", "and ends with the highest standards", "of integrity.”"],
+    text: CTA.text,
+    image: CTA.image,
+    alt: "Stacked balconies with trailing greenery against a deep blue sky",
   },
 };

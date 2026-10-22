@@ -877,6 +877,9 @@ html.lv-root {
   left: calc(var(--offset) * -1);
   right: calc(var(--offset) * -1);
 }
+.lv .w_shadow._30 { opacity: 0.3; }
+.lv .w_shadow._50 { opacity: 0.5; }
+.lv .w_shadow._75 { opacity: 0.75; }
 @media (max-width: 991px) {
   .lv .about-s_lead { grid-area: 1 / 1 / 2 / 5; }
   .lv .about-s_content { grid-area: 3 / 2 / 4 / 5; }
@@ -1030,8 +1033,10 @@ html.lv-root {
   align-items: center;
   visibility: hidden;
   transform: translate(var(--x, 0px), var(--y, 0px));
-  translate: -50% -50%;
   color: #fff;
+}
+.lv .floating-tip:has(.btn-circle) {
+  translate: -50% -50%;
 }
 .lv .floating-tip .btn-circle {
   scale: 0.5;

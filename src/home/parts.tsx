@@ -1,8 +1,8 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 /** Non-standard attribute helper: `hover="text"` etc. are read by the runtime. */
-export const H = (value: string) => ({ hover: value }) as HTMLAttributes<HTMLElement>;
+export const H = (value: string) => ({ hover: value });
 
 /** Two stacked copies of a label; the runtime rolls characters between them on hover. */
 export function Label({ text, className = "l1" }: { text: string; className?: string }) {
@@ -43,7 +43,7 @@ export const DotIcon = () => (
 );
 
 /** Underlined text button whose line fills on hover. Links somewhere, or opens the contact panel. */
-export function Btn({ text, to, modal }: { text: string; to?: string; modal?: boolean }) {
+export function Btn({ text, to, modal, icon = "arrow" }: { text: string; to?: string; modal?: boolean; icon?: "arrow" | "dot" }) {
   const modalAttr = modal ? { "data-modal-cta-btn": "cta" } : {};
   return (
     <div {...modalAttr} hover-nav-item-trigger="" hover-btn="" className="btn">
@@ -55,7 +55,7 @@ export function Btn({ text, to, modal }: { text: string; to?: string; modal?: bo
       <div {...H("ico")} className="btn_ico">
         <div className="ico-16">
           <div className="ico">
-            <ArrowIcon />
+            {icon === "dot" ? <DotIcon /> : <ArrowIcon />}
           </div>
         </div>
       </div>
