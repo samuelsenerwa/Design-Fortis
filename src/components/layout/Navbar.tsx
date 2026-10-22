@@ -152,7 +152,7 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
             data-cursor="hover"
             className="text-lg font-semibold tracking-[0.2em] text-foreground uppercase"
           >
-            Design Fortis
+            Arsvel
           </a>
 
           {/* Desktop nav links */}

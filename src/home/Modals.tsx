@@ -132,7 +132,7 @@ export function ContactModal() {
                     <div className="grid _8-columns">
                       <div className="form_success_desc">
                         <div className="p1 a-center text-dark">
-                          A member of the Design Fortis team will review your message and respond personally. We
+                          A member of the Arsvel team will review your message and respond personally. We
                           typically reply within one business day.
                         </div>
                       </div>
@@ -295,7 +295,7 @@ export function MenuModal() {
               ©<span className="year" />.
             </div>
             <div data-modal-p="" className="l1 text-dark">
-              Design Fortis.
+              Arsvel.
             </div>
             <div data-modal-p="" className="l1 text-dark">
               All rights reserved

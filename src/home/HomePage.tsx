@@ -169,7 +169,7 @@ export default function HomePage() {
                         <div data-parallax="w" className="img-w">
                           <ResponsiveImage
                             name={HERO.poster}
-                            alt="Design Fortis — architectural design and build"
+                            alt="Arsvel — architectural design and build"
                             role="hero"
                             // A landscape photo cropped into a tall mobile viewport needs far more
                             // pixels than 100vw suggests.
@@ -687,7 +687,7 @@ export default function HomePage() {
                   <div data-parallax="w" className="img-w top">
                     <ResponsiveImage
                       name={CTA.image}
-                      alt="Design Fortis building against a clear sky"
+                      alt="Arsvel building against a clear sky"
                       role="hero"
                       sizes="(max-width: 991px) 200vh, 100vw"
                       data-parallax="img"

@@ -3,7 +3,7 @@ import PROJECTS from "../data/projects";
 /** Intro screen. */
 export const LOADER = {
   words: ["A New", "Standard", "Of", "Design"] as const,
-  title: "Design Fortis",
+  title: "Arsvel",
   subtitle: "Architectural Design & Build Studio",
   /** Picture that opens between the words. */
   image: "fortis_estate_front",
@@ -26,7 +26,7 @@ export const HERO = {
 
 export const ABOUT = {
   label: "About",
-  lead: "Design Fortis designs and builds architecture shaped by listening, precision and purpose — from your first idea to a structure that stands in the real world, built to exceed what you imagined possible.",
+  lead: "Arsvel designs and builds architecture shaped by listening, precision and purpose — from your first idea to a structure that stands in the real world, built to exceed what you imagined possible.",
   caption: "Beyond architecture.",
   paragraphs: [
     "We are your single point of accountability from concept to completion. Our integrated team of architects, designers and builders ensures seamless delivery at every stage.",
@@ -107,7 +107,7 @@ export const SERVICES = {
 };
 
 export const CTA = {
-  quote: ["“Every Design Fortis project begins", "and ends with the highest standards", "of integrity.”"],
+  quote: ["“Every Arsvel project begins", "and ends with the highest standards", "of integrity.”"],
   text: "Integrity is the foundation of every decision we make — from the first concept and the choice of partners to the final handover. We are guided by transparency and accountability.",
   image: "lut_interactive_lightmix",
 };
@@ -121,7 +121,7 @@ export const CONTACT = {
 };
 
 export const FOOTER = {
-  wordmark: "Fortis",
+  wordmark: "Arsvel",
   explore: [
     { label: "Home", to: "/" },
     { label: "About us", to: "/about" },
@@ -133,15 +133,15 @@ export const FOOTER = {
 /** /about — copy and imagery. Photographs here are not used on the home page. */
 export const ABOUT_PAGE = {
   hero: {
-    label: "Design Fortis",
+    label: "Arsvel",
     title: ["A Studio", "Designing", "& Building", "For Generations"],
-    text: "Design Fortis is an architectural design and build studio based in Mombasa, Kenya. We take on a select number of projects, each defined by an uncompromising commitment to design, craftsmanship, and the enduring quality of what we build.",
+    text: "Arsvel is an architectural design and build studio based in Mombasa, Kenya. We take on a select number of projects, each defined by an uncompromising commitment to design, craftsmanship, and the enduring quality of what we build.",
   },
   values: {
     label: "Our values",
     quote:
-      "At Design Fortis, precision, collaboration, and innovation are the foundation of everything we do. We hold ourselves to the highest standards of craft, keep our clients involved at every milestone, and pursue excellence in every detail.",
-    author: "The Design Fortis Team",
+      "At Arsvel, precision, collaboration, and innovation are the foundation of everything we do. We hold ourselves to the highest standards of craft, keep our clients involved at every milestone, and pursue excellence in every detail.",
+    author: "The Arsvel Team",
     role: "Architects & Builders, Mombasa",
   },
   whatWeDo: {
@@ -180,7 +180,7 @@ export const ABOUT_PAGE = {
     caption: { index: "03", name: "Nordic Retreat", place: "Jämtland, Sweden", to: "/projects/nordic-retreat" },
   },
   cta: {
-    quote: "“Every Design Fortis project begins and ends with the highest standards of integrity”",
+    quote: "“Every Arsvel project begins and ends with the highest standards of integrity”",
     text: "Integrity is the foundation of every decision we make. From identifying opportunities and selecting partners to managing construction and delivering completed projects, we are guided by transparency and accountability.",
     image: "olerian_mara_interior_view",
     alt: "Lattice timber dome over a lounge with hanging greenery",
@@ -201,7 +201,7 @@ export const PROJECTS_PAGE = {
   subtitle: "Considered buildings, designed and built to endure",
   lead: "Architecture Shaped by Place and Purpose.",
   cta: {
-    quote: ["“Every Design Fortis project begins", "and ends with the highest standards", "of integrity.”"],
+    quote: ["“Every Arsvel project begins", "and ends with the highest standards", "of integrity.”"],
     text: CTA.text,
     image: CTA.image,
     alt: "Stacked balconies with trailing greenery against a deep blue sky",

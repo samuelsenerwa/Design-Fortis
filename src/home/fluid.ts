@@ -175,7 +175,13 @@ function makeTextMask(el: HTMLElement): THREE.CanvasTexture | null {
   const descent = m.fontBoundingBoxDescent ?? fontSize * 0.2;
   // CSS centres the glyph box inside the line box ("half-leading").
   const baseline = paddingTop + (lineHeight - (ascent + descent)) / 2 + ascent;
-  ctx.fillText(text, canvas.width / 2 + letterSpacing / 2, baseline);
+  // Text wider than its box does not centre in CSS: it starts at the left edge and spills right.
+  if (m.width > canvas.width) {
+    ctx.textAlign = "left";
+    ctx.fillText(text, 0, baseline);
+  } else {
+    ctx.fillText(text, canvas.width / 2 + letterSpacing / 2, baseline);
+  }
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.needsUpdate = true;

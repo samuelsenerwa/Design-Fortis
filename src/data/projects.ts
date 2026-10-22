@@ -78,7 +78,7 @@ const PROJECTS: Project[] = [
     study: {
       tagline: "A City Within a City, Shaped for the Coast.",
       overview:
-        "Design Fortis is delivering a climate-responsive mixed-use landmark beside NSSF Towers in the heart of Mombasa CBD. A 24-hour retail podium, a smart office tower and a residential block of studios and one- and two-bedroom apartments rise above two levels of basement parking for 450 vehicles, with timber louvers, shaded balconies and planting answering the tropical coast on every facade.",
+        "Arsvel is delivering a climate-responsive mixed-use landmark beside NSSF Towers in the heart of Mombasa CBD. A 24-hour retail podium, a smart office tower and a residential block of studios and one- and two-bedroom apartments rise above two levels of basement parking for 450 vehicles, with timber louvers, shaded balconies and planting answering the tropical coast on every facade.",
       reel: showreel,
       context:
         "Mombasa's old town meets its new skyline here: a compact urban block that gives the city shade, street life and a place to stay.",
@@ -86,11 +86,11 @@ const PROJECTS: Project[] = [
         { label: "Location", value: "Mombasa CBD, Kenya" },
         { label: "Programme", value: "Retail, office, residential" },
         { label: "Parking", value: "450 vehicles, 2 levels" },
-        { label: "Architecture & Interiors", value: "Design Fortis" },
+        { label: "Architecture & Interiors", value: "Arsvel" },
       ],
       quote: {
         text: "We wanted a tower that belongs to Mombasa: deep shade, moving air and a street-level life that never switches off. Every facade decision answers the coast.",
-        author: "The Design Fortis Team",
+        author: "The Arsvel Team",
         role: "Architects & Builders, Mombasa",
       },
       amenities: ["lut_interactive_lightmix", "underground_parking", "hero_poster", "apartment_interior", "window_view"],
@@ -152,11 +152,11 @@ const PROJECTS: Project[] = [
         { label: "Location", value: "Machakos, Kenya" },
         { label: "Site Area", value: "15 acres, Phase One" },
         { label: "Plots", value: "168 homes, 3 & 4 bedrooms" },
-        { label: "Architecture & Interiors", value: "Design Fortis" },
+        { label: "Architecture & Interiors", value: "Arsvel" },
       ],
       quote: {
         text: "A good neighbourhood starts at the front door and continues down the street. We drew the plot, the lane and the park as one connected composition.",
-        author: "The Design Fortis Team",
+        author: "The Arsvel Team",
         role: "Architects & Builders, Mombasa",
       },
       amenities: ["fortis_estate", "fortis_estate_front", "window_view", "fortis_estate_compound", "room_interior"],
@@ -193,7 +193,7 @@ const PROJECTS: Project[] = [
       ],
       progress: {
         title: "A Community Coming to Life",
-        text: "At Design Fortis, design and construction are one conversation. Our team oversees every detail so quality, efficiency and performance are held through each phase.",
+        text: "At Arsvel, design and construction are one conversation. Our team oversees every detail so quality, efficiency and performance are held through each phase.",
         entries: [
           { date: "Q1 2025", text: "Master plan approved and infrastructure design complete, with roads and drainage set out across Phase One.", image: "fortis_estate_compound" },
           { date: "Q2 2025", text: "Roads, services and the central park are under construction while the first show homes rise.", image: "fortis_estate_front" },

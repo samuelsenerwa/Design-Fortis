@@ -61,7 +61,7 @@ export function SiteHeader({
                 data-header-logo=""
                 to="/#hero"
                 className="logo-mark"
-                aria-label="Design Fortis — home"
+                aria-label="Arsvel — home"
               >
                 <Wordmark />
               </Link>
@@ -146,7 +146,7 @@ export function SiteFooter({ current = "/" }: { current?: string }) {
                     data-scroll-reveal="ctn"
                     className="footer-s_officess_item"
                   >
-                    <div className="l1 text-dark">Design Fortis</div>
+                    <div className="l1 text-dark">Arsvel</div>
                     <div className="u-16" />
                     <div className="contact-list">
                       <div className="contact-list_item">
@@ -222,7 +222,7 @@ export function SiteFooter({ current = "/" }: { current?: string }) {
               </div>
               <div className="footer-s_copyright">
                 <div className="l1 text-dark">
-                  Design Fortis. All rights reserved
+                  Arsvel. All rights reserved
                 </div>
               </div>
               <div className="footer-s_legal">
@@ -307,7 +307,7 @@ export function SiteOverlays({ tips, children }: { tips?: ReactNode; children?: 
                 </div>
                 <div className="u-8" />
                 <div className="h3 text-dark">
-                  Design Fortis uses cookies to deliver a considered browsing
+                  Arsvel uses cookies to deliver a considered browsing
                   experience. No data is shared with third parties.
                 </div>
               </div>

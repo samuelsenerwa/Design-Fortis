@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-const SUFFIX = "Design Fortis";
+const SUFFIX = "Arsvel";
 
-/** Sets the tab title for the current page, e.g. "Projects — Design Fortis". */
+/** Sets the tab title for the current page, e.g. "Projects — Arsvel". */
 export function useDocumentTitle(title: string) {
   useEffect(() => {
     const previous = document.title;

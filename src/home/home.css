@@ -1357,7 +1357,7 @@ html.lv-root {
   text-align: center;
   font-family: var(--font-body);
   font-weight: 200;
-  font-size: 28vw;
+  font-size: 26vw;
   line-height: 0.82;
   letter-spacing: 0.015em;
   text-transform: uppercase;
@@ -1447,7 +1447,7 @@ html.lv-root {
   .lv .footer-s_credits { grid-area: 3 / 3 / 4 / 5; }
   .lv .footer-s_logo { order: 2; margin-bottom: var(--u16); }
   .lv .footer-s_bot { order: 9999; }
-  .lv .footer-wordmark { font-size: 28vw; }
+  .lv .footer-wordmark { font-size: 26vw; }
 }
 
 /* ── modals ── */
