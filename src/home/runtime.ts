@@ -7,12 +7,14 @@ import {
   REVEAL_FNS,
   animateCtn,
   animateImg,
+  animateLine,
   animateTextH,
   animateTextP,
   durL,
   durM,
   durS,
   reducedMotion,
+  stagger,
 } from "./motion";
 import { bindMagnetic, bindNavItemHover } from "./hover";
 
@@ -37,8 +39,23 @@ export function unlockScroll(lenis: Lenis) {
  * Wires every behaviour on the home page from `data-*` / `hover-*` attributes
  * in the markup. Returns a cleanup that removes every listener and trigger.
  */
-export function initHomeScripts(root: HTMLElement, lenis: Lenis): Cleanup {
+export function initHomeScripts(
+  root: HTMLElement,
+  lenis: Lenis,
+  /** Hands the pointer-only set-up (hover effects) to the caller to run later, e.g. after a page transition. */
+  defer?: (run: () => void) => void
+): Cleanup {
   const cleanups: Cleanup[] = [];
+  let disposed = false;
+  const later = (run: () => void) => {
+    if (!defer) return run();
+    defer(() => {
+      const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
+      idle(() => {
+        if (!disposed) run();
+      });
+    });
+  };
   const mm = gsap.matchMedia();
   const on = <K extends keyof HTMLElementEventMap>(
     el: HTMLElement | Document | Window,
@@ -62,11 +79,16 @@ export function initHomeScripts(root: HTMLElement, lenis: Lenis): Cleanup {
   initRevealFirst();
   initScrollReveal();
   initParallax();
-  initMagnetic();
-  initNavItemHover();
-  initLinkHover();
+  later(() => {
+    initMagnetic();
+    initNavItemHover();
+    initLinkHover();
+    initFloatingTips();
+  });
   initTabs();
-  initFloatingTips();
+  initStickySlider();
+  initAccordion();
+  initOurValuesFlow();
   initModals();
   initCookies();
   initAnchors();
@@ -75,6 +97,7 @@ export function initHomeScripts(root: HTMLElement, lenis: Lenis): Cleanup {
   requestAnimationFrame(() => ScrollTrigger.refresh());
 
   return () => {
+    disposed = true;
     cleanups.forEach((fn) => fn());
     mm.revert();
     ScrollTrigger.getAll().forEach((t) => {
@@ -447,6 +470,149 @@ export function initHomeScripts(root: HTMLElement, lenis: Lenis): Cleanup {
         };
         on(trigger, "click", handler);
       });
+    });
+  }
+
+  /**
+   * About: a tall section pins a stage while the page scrolls through phantom
+   * triggers; each trigger swaps the visible slide and slides the name list so
+   * the active name sits at the top of its column.
+   */
+  function initStickySlider() {
+    mm.add(`(min-width: ${BREAKPOINT}px)`, () => {
+      $$("[data-sticky-slider]").forEach((wrap) => {
+        const slides = $$("[data-sticky-slide]", wrap);
+        const triggers = $$("[data-sticky-trigger]", wrap);
+        const names = $$("[data-sticky-name]", wrap);
+        const list = wrap.querySelector<HTMLElement>("[data-sticky-names]");
+        if (!slides.length || !list) return;
+
+        const parts = {
+          slide: animateImg,
+          h: animateTextH,
+          p: animateTextP,
+          line: animateLine,
+          ctn: animateCtn,
+        } as const;
+        const run = (el: HTMLElement, mode: "initial" | "reveal" | "hide", delay?: number, dir?: "next" | "prev") => {
+          const fn = parts[el.dataset.el as keyof typeof parts];
+          if (fn === animateImg) animateImg(el, mode, delay, dir);
+          else fn?.(el, mode, delay);
+        };
+
+        let current = 0;
+        let z = slides.length;
+
+        const slideNames = (index: number) => {
+          const offset = names[index].offsetTop - names[0].offsetTop;
+          names.forEach((n) => n.classList.remove("is-active"));
+          names[index].classList.add("is-active");
+          gsap.to(list, { y: -offset, duration: durM, ease: "Out" });
+        };
+        const show = (slide: HTMLElement, dir: "next" | "prev") => {
+          const els = $$<HTMLElement>("[data-el]", slide);
+          (slide as HTMLElement & { _hide?: gsap.core.Tween })._hide?.kill();
+          gsap.set(slide, { display: "block", zIndex: ++z });
+          gsap.set(els, { clearProps: "opacity", overwrite: true });
+          els.forEach((el, i) => run(el, "reveal", i * stagger, dir));
+          return els.length * stagger + durL;
+        };
+        const go = (index: number) => {
+          if (index === current) return;
+          const out = slides[current];
+          const inn = slides[index];
+          const fading = $$<HTMLElement>('[data-el]:not([data-el="slide"])', out);
+          const dir = index > current ? "next" : "prev";
+          current = index;
+          gsap.to(fading, { opacity: 0, duration: 0.2, ease: "Out" });
+          const wait = show(inn, dir);
+          slideNames(index);
+          (out as HTMLElement & { _hide?: gsap.core.Tween })._hide = gsap.delayedCall(wait, () => {
+            gsap.set(out, { display: "none" });
+          });
+        };
+
+        slides.slice(1).forEach((slide) => $$<HTMLElement>("[data-el]", slide).forEach((el) => run(el, "initial")));
+        gsap.set(slides.slice(1), { display: "none" });
+        slideNames(0);
+
+        triggers.forEach((trigger, index) => {
+          ScrollTrigger.create({
+            trigger,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => go(index),
+            onEnterBack: () => go(index),
+          });
+        });
+        names.forEach((name, index) => {
+          const click = () =>
+            lenis.scrollTo(triggers[index], { offset: -window.innerHeight / 2 + triggers[index].offsetHeight / 2 });
+          name.addEventListener("click", click);
+          cleanups.push(() => name.removeEventListener("click", click));
+        });
+      });
+    });
+  }
+
+  /** Mobile twin of the sticky slider: one card open at a time. */
+  function initAccordion() {
+    let open: (HTMLElement & { closeFunc?: () => void }) | null = null;
+    $$('[data-accordion-card=""]').forEach((card: HTMLElement & { closeFunc?: () => void }) => {
+      const content = card.querySelector<HTMLElement>('[data-accordion-card="content"]');
+      const plus = card.querySelector<HTMLElement>('[data-ico-plus="v"]');
+      const text = card.querySelectorAll('[data-accordion-card="p"]');
+      const img = card.querySelectorAll('[data-accordion-card="img"]');
+      if (!content) return;
+      gsap.set(content, { height: 0, overflow: "hidden" });
+      const expand = () => {
+        gsap.to(content, { height: "auto", duration: durL, ease: "Out", onComplete: () => ScrollTrigger.refresh() });
+        gsap.fromTo(plus, { rotate: 0 }, { rotate: -90, duration: durM, ease: "InOut", overwrite: true });
+        animateTextP(text as never, "reveal");
+        animateImg(img as never, "reveal");
+      };
+      const collapse = () => {
+        gsap.to(content, { height: 0, duration: durL, ease: "Out", onComplete: () => ScrollTrigger.refresh(), overwrite: true });
+        gsap.to(plus, { rotate: -180, duration: durM, ease: "InOut", overwrite: true });
+        animateTextP(text as never, "hide");
+        animateImg(img as never, "hide");
+      };
+      const toggle = () => {
+        if (open && open !== card) open.closeFunc?.();
+        if (open !== card) {
+          expand();
+          open = card;
+        } else {
+          collapse();
+          open = null;
+        }
+      };
+      on(card, "click", toggle);
+      card.closeFunc = collapse;
+    });
+  }
+
+  /** About: the sticky stage's strapline fades once the list takes over; a rule draws down as you scroll. */
+  function initOurValuesFlow() {
+    mm.add(`(min-width: ${BREAKPOINT}px)`, () => {
+      const wrap = root.querySelector<HTMLElement>(".our-values-w");
+      if (!wrap) return;
+      const desc = wrap.querySelectorAll<HTMLElement>(".our-values-s_desc p");
+      ScrollTrigger.create({
+        trigger: wrap,
+        start: "20% top",
+        onEnter: () => animateTextP(desc, "hide"),
+        onLeaveBack: () => animateTextP(desc, "reveal"),
+      });
+      const progress = wrap.querySelector<HTMLElement>(".our-values-s_progress");
+      if (progress) {
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: "top top",
+          end: "bottom bottom",
+          onUpdate: (self) => progress.style.setProperty("--progress", String(self.progress)),
+        });
+      }
     });
   }
 
