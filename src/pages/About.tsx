@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
 import "../home/home.css";
 import { ABOUT_PAGE } from "../home/content";
+import CtaSection from "../home/CtaSection";
 import { Btn, Label } from "../home/parts";
 import ShadowLayer from "../home/ShadowLayer";
 import { SiteFooter, SiteHeader, SiteOverlays } from "../home/SiteChrome";
@@ -389,59 +390,7 @@ export default function About() {
           </section>
 
           {/* ── Closing quote ───────────────────────────────────── */}
-          <section data-bg="color" className="section theme_on-color">
-            <div className="container">
-              <div className="cta-w">
-                <div className="cta-s">
-                  <div className="u-128" />
-                  <div className="grid">
-                    <div className="cta-s_title">
-                      <h2 data-scroll-reveal="h" className="h1 text-dark">
-                        {cta.quote}
-                      </h2>
-                    </div>
-                  </div>
-                  <div className="u-96" />
-                  <div className="grid">
-                    <div className="cta-s_desc">
-                      <p data-scroll-reveal="p" className="p1 text-dark">
-                        {cta.text}
-                      </p>
-                      <div className="u-24" />
-                      <div data-scroll-reveal="ctn" className="cta-s_desc_btn">
-                        <Btn text="Let’s Talk" modal />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="u-128" />
-                </div>
-                <div className="w_bg">
-                  <div className="cta-w_bg_line">
-                    <div className="w_bg_line_100 b-desk">
-                      <div className="deco tb o20w" />
-                    </div>
-                    <div className="w_bg_line_r-50 b-desk">
-                      <div className="deco lbrt o20w" />
-                    </div>
-                    <div className="w_bg_line_100 b-mob">
-                      <div className="deco lbrt o20w" />
-                    </div>
-                  </div>
-                  <div data-parallax="w" className="img-w top">
-                    <ResponsiveImage
-                      name={cta.image}
-                      alt={cta.alt}
-                      role="hero"
-                      sizes="(max-width: 991px) 200vh, 100vw"
-                      data-parallax="img"
-                      className="img img-p-s"
-                    />
-                    <div className="img-over-grad cta-scrim" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <CtaSection quote={cta.quote} text={cta.text} image={cta.image} alt={cta.alt} />
 
           <SiteFooter current="/about" />
         </div>

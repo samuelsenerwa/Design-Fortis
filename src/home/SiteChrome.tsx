@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { CONTACT, FOOTER, HEADER } from "./content";
+import DeferredFluidCursor from "./DeferredFluidCursor";
 import { ContactModal, MenuModal } from "./Modals";
 import { H, Label, NavLink } from "./parts";
 import Wordmark from "./Wordmark";
@@ -256,20 +258,34 @@ export function SiteFooter({ current = "/" }: { current?: string }) {
   );
 }
 
-/** Cursor tip, contact panel, mobile menu and cookie banner. */
-export function SiteOverlays() {
+/** A circular cursor label, e.g. "View gallery". */
+export function CircleTip({ name, label }: { name: string; label: string }) {
+  return (
+    <div floating-tip={name} className="floating-tip">
+      <div className="btn-circle">
+        <div className="l1">{label}</div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Cursor tip, contact panel, mobile menu and cookie banner.
+ * `tips` adds page-specific cursor tips; `children` adds page-specific modals.
+ */
+export function SiteOverlays({ tips, children }: { tips?: ReactNode; children?: ReactNode }) {
   return (
     <>
       <div className="floating-tips">
         <div className="floating-tips_list">
-          <div floating-tip="view-project" className="floating-tip">
-            <div className="btn-circle">
-              <div className="l1">View project</div>
-            </div>
-          </div>
+          <CircleTip name="view-project" label="View project" />
+          {tips}
         </div>
       </div>
 
+      {children}
+
+      <DeferredFluidCursor />
       <ContactModal />
       <MenuModal />
 
