@@ -86,7 +86,7 @@ const PROJECTS: Project[] = [
         { label: "Location", value: "Mombasa CBD, Kenya" },
         { label: "Programme", value: "Retail, office, residential" },
         { label: "Parking", value: "450 vehicles, 2 levels" },
-        { label: "Architecture & Interiors", value: "Arsvel" },
+        { label: "Design & Build", value: "Arsvel" },
       ],
       quote: {
         text: "We wanted a tower that belongs to Mombasa: deep shade, moving air and a street-level life that never switches off. Every facade decision answers the coast.",
@@ -152,7 +152,7 @@ const PROJECTS: Project[] = [
         { label: "Location", value: "Machakos, Kenya" },
         { label: "Site Area", value: "15 acres, Phase One" },
         { label: "Plots", value: "168 homes, 3 & 4 bedrooms" },
-        { label: "Architecture & Interiors", value: "Arsvel" },
+        { label: "Design & Build", value: "Arsvel" },
       ],
       quote: {
         text: "A good neighbourhood starts at the front door and continues down the street. We drew the plot, the lane and the park as one connected composition.",

@@ -21,7 +21,11 @@ export const reducedMotion = () =>
 export function fontsReady(): Promise<void> {
   if (typeof document === "undefined" || !document.fonts) return Promise.resolve();
   // Already in (e.g. arriving from another page of the site): don't spend a frame waiting.
-  if (document.fonts.check('400 1em "Crimson Pro"') && document.fonts.check('400 1em "Inter Tight"')) {
+  if (
+    document.fonts.status === "loaded" &&
+    document.fonts.check('400 1em "Crimson Pro"') &&
+    document.fonts.check('400 1em "Inter Tight"')
+  ) {
     return Promise.resolve();
   }
   const loading = Promise.all([
