@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import ResponsiveImage from "../components/ui/ResponsiveImage";
-import AppLightbox from "../components/ui/AppLightbox";
+import GalleryModal from "../components/gallery/GalleryModal";
 import { getLargestUrl } from "../lib/imageManifest";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 
@@ -70,12 +70,12 @@ function ArchiveItem({
 }
 
 export default function Archive({ dark }: ArchiveProps) {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
-    setLightboxOpen(true);
+  const openGallery = (index: number) => {
+    setGalleryIndex(index);
+    setGalleryOpen(true);
   };
 
   return (
@@ -107,20 +107,20 @@ export default function Archive({ dark }: ArchiveProps) {
               name={image.name}
               alt={image.alt}
               index={index}
-              onOpen={openLightbox}
+              onOpen={openGallery}
             />
           ))}
         </div>
       </div>
 
-      {/* Lightbox */}
-      <AppLightbox
-        open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
-        index={lightboxIndex}
+      {/* Gallery viewer */}
+      <GalleryModal
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        index={galleryIndex}
         title="Archive"
         slides={ARCHIVE_IMAGES.map((img) => ({
-          src: getLargestUrl(img.name, "jpg"),
+          src: getLargestUrl(img.name, "webp"),
           alt: img.alt,
         }))}
       />
