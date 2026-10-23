@@ -7,15 +7,17 @@ interface NavbarProps {
   toggleTheme: () => void;
 }
 
+// Note: "WORK" previously pointed to a non-existent "/work" route (only
+// "/work/:slug" exists) — consolidated into "ARCHIVE", the actual
+// all-projects listing page, to fix that dead link.
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
-  { label: "WORK", href: "/work" },
   { label: "ARCHIVE", href: "/archive" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
 ];
 
-const DESKTOP_LINKS = NAV_LINKS.filter((l) => l.label !== "HOME" && l.label !== "WORK");
+const DESKTOP_LINKS = NAV_LINKS.filter((l) => l.label !== "HOME");
 
 export default function Navbar({ dark, toggleTheme }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -147,9 +149,10 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
           {/* Logo */}
           <a
             href="/"
+            data-cursor="hover"
             className="text-lg font-semibold tracking-[0.2em] text-foreground uppercase"
           >
-            Design Fortis
+            Arsvel
           </a>
 
           {/* Desktop nav links */}
@@ -158,6 +161,7 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
               <a
                 key={link.label}
                 href={link.href}
+                data-cursor="hover"
                 className={`text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-300 hover:text-foreground ${
                   isActive(link.href) 
                     ? "text-foreground border-b-2 border-foreground" 
@@ -174,6 +178,7 @@ export default function Navbar({ dark, toggleTheme }: NavbarProps) {
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
+            data-cursor="hover"
             className="md:hidden cursor-pointer text-foreground"
           >
             <svg
