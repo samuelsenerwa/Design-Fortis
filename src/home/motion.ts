@@ -32,7 +32,7 @@ export function fontsReady(): Promise<void> {
     document.fonts.load('400 1em "Crimson Pro"'),
     document.fonts.load('400 1em "Inter Tight"'),
     document.fonts.ready,
-  ]).then(() => undefined);
+  ]).then(() => undefined, () => undefined);
   // Never let a slow font host hold the intro hostage.
   return Promise.race([loading, new Promise<void>((r) => setTimeout(r, 3000))]);
 }
