@@ -255,6 +255,7 @@ export function initProjectScripts(root: HTMLElement, lenis: Lenis): Cleanup {
         unbind.push(() => {
           pin.removeEventListener("click", onOpen);
           closers.forEach((c) => c.removeEventListener("click", onClose));
+          if (open) unlockScroll(lenis);
           gsap.set(modal, { clearProps: "display" });
         });
       });
